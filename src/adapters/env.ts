@@ -16,7 +16,7 @@ interface Env {
   VITE_ETHEREUM_PROOF_OF_EFFICIENCY_CONTRACT_ADDRESS: string;
   VITE_ETHEREUM_ROLLUP_MANAGER_ADDRESS: string;
   VITE_ETHEREUM_RPC_URL: string;
-  VITE_FAVICON_PATH: string;
+  VITE_FAVICON_PATH?: string;
   VITE_FIAT_EXCHANGE_RATES_API_KEY?: string;
   VITE_FIAT_EXCHANGE_RATES_API_URL?: string;
   VITE_FIAT_EXCHANGE_RATES_ETHEREUM_USDC_ADDRESS?: string;
@@ -35,6 +35,7 @@ interface Env {
   VITE_REPORT_FORM_PLATFORM_ENTRY?: string;
   VITE_REPORT_FORM_URL?: string;
   VITE_REPORT_FORM_URL_ENTRY?: string;
+  VITE_TITLE: string;
 }
 
 type GetFiatExchangeRatesEnvParams = Pick<
@@ -188,6 +189,7 @@ const envToDomain = ({
   VITE_REPORT_FORM_PLATFORM_ENTRY,
   VITE_REPORT_FORM_URL,
   VITE_REPORT_FORM_URL_ENTRY,
+  VITE_TITLE,
 }: Env): Promise<domain.Env> => {
   const polygonZkEVMNetworkId = z.coerce.number().positive().parse(VITE_POLYGON_ZK_EVM_NETWORK_ID);
   const isOutdatedNetworkModalEnabled = stringBooleanParser.parse(
@@ -201,6 +203,7 @@ const envToDomain = ({
   const faviconPath = VITE_FAVICON_PATH;
   const networkName = VITE_NETWORK_NAME;
   const networkSymbol = VITE_NETWORK_SYMBOL;
+  const title = VITE_TITLE;
 
   const outdatedNetworkModal: domain.Env["outdatedNetworkModal"] = isOutdatedNetworkModalEnabled
     ? {
@@ -260,6 +263,7 @@ const envToDomain = ({
         VITE_REPORT_FORM_URL,
         VITE_REPORT_FORM_URL_ENTRY,
       }),
+      title,
     };
   });
 };
@@ -278,7 +282,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
       VITE_ETHEREUM_PROOF_OF_EFFICIENCY_CONTRACT_ADDRESS: z.string().length(42),
       VITE_ETHEREUM_ROLLUP_MANAGER_ADDRESS: z.string().length(42),
       VITE_ETHEREUM_RPC_URL: z.string().url(),
-      VITE_FAVICON_PATH: z.string(),
+      VITE_FAVICON_PATH: z.string().optional(),
       VITE_FIAT_EXCHANGE_RATES_API_KEY: z.string().optional(),
       VITE_FIAT_EXCHANGE_RATES_API_URL: z.string().url().optional(),
       VITE_FIAT_EXCHANGE_RATES_ETHEREUM_USDC_ADDRESS: z.string().length(42).optional(),
@@ -297,6 +301,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
       VITE_REPORT_FORM_PLATFORM_ENTRY: z.string().optional(),
       VITE_REPORT_FORM_URL: z.string().optional(),
       VITE_REPORT_FORM_URL_ENTRY: z.string().optional(),
+      VITE_TITLE: z.string(),
     })
     .transform(envToDomain)
 );

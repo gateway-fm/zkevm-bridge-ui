@@ -19,7 +19,7 @@ export const AppHead = () => {
       )}
       <link href="/logo192.png" rel="apple-touch-icon" />
       <link href="/manifest.json" rel="manifest" />
-      <title>Polygon zkEVM Bridge</title>
+      {env?.title ? <title>{env.title}</title> : <title>Polygon zkEVM Bridge</title>}
     </Helmet>
   );
 };

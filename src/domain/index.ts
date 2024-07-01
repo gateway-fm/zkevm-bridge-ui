@@ -69,7 +69,7 @@ export interface ReportFormEnvEnabled {
 export interface Env {
   bridgeApiUrl: string;
   chains: [EthereumChain, ZkEVMChain];
-  faviconPath: string;
+  faviconPath?: string;
   fiatExchangeRates:
     | {
         areEnabled: false;
@@ -97,6 +97,7 @@ export interface Env {
         url?: string;
       };
   reportForm: ReportFormEnvEnabled | ReportFormEnvDisabled;
+	title: string;
 }
 
 export interface RouterState {
