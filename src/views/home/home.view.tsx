@@ -55,9 +55,19 @@ export const Home = (): JSX.Element => {
   const onResetForm = () => {
     setFormData(undefined);
   };
-
+  
   return (
-    <div className={classes.contentWrapper}>
+    <div
+      className={classes.contentWrapper}
+      style={{
+        backgroundImage: env?.bridgeBackgroundUrl
+          ? `url('${env.bridgeBackgroundUrl}')`
+          : 'none',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+      }}
+    >
       <Header />
       {connectedProvider.status === "successful" && (
         <>

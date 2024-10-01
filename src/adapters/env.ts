@@ -6,6 +6,7 @@ import { StrictSchema } from "src/utils/type-safety";
 
 interface Env {
   VITE_BRIDGE_API_URL: string;
+  VITE_BRIDGE_BACKGROUND?: string;
   VITE_ENABLE_DEPOSIT_WARNING: string;
   VITE_ENABLE_FIAT_EXCHANGE_RATES: string;
   VITE_ENABLE_OUTDATED_NETWORK_MODAL?: string;
@@ -22,6 +23,7 @@ interface Env {
   VITE_FIAT_EXCHANGE_RATES_ETHEREUM_USDC_ADDRESS?: string;
   VITE_ICON_PATH?: string;
   VITE_LOGO_PATH?: string;
+  VITE_LOGO_POSITION?: string;
   VITE_NETWORK_NAME?: string;
   VITE_NETWORK_SYMBOL?: string;
   VITE_OUTDATED_NETWORK_MODAL_MESSAGE_PARAGRAPH_1?: string;
@@ -176,6 +178,8 @@ const envToDomain = ({
   VITE_FIAT_EXCHANGE_RATES_ETHEREUM_USDC_ADDRESS,
   VITE_ICON_PATH,
   VITE_LOGO_PATH,
+  VITE_LOGO_POSITION,
+  VITE_BRIDGE_BACKGROUND,
   VITE_NETWORK_NAME,
   VITE_NETWORK_SYMBOL,
   VITE_OUTDATED_NETWORK_MODAL_MESSAGE_PARAGRAPH_1,
@@ -199,7 +203,9 @@ const envToDomain = ({
     VITE_ETHEREUM_FORCE_UPDATE_GLOBAL_EXIT_ROOT
   );
   const bridgeApiUrl = VITE_BRIDGE_API_URL;
+  const bridgeBackgroundUrl = VITE_BRIDGE_BACKGROUND;
   const logoPath = VITE_LOGO_PATH;
+  const logoPosition = VITE_LOGO_POSITION;
   const iconPath = VITE_ICON_PATH ?? logoPath;
   const faviconPath = VITE_FAVICON_PATH;
   const networkName = VITE_NETWORK_NAME;
@@ -242,6 +248,7 @@ const envToDomain = ({
 
     return {
       bridgeApiUrl,
+      bridgeBackgroundUrl,
       chains,
       faviconPath,
       fiatExchangeRates: getFiatExchangeRatesEnv({
@@ -254,6 +261,7 @@ const envToDomain = ({
       forceUpdateGlobalExitRootForL1,
       isDepositWarningEnabled,
       logoPath,
+      logoPosition,
       networkName,
       networkSymbol,
       outdatedNetworkModal,
@@ -272,6 +280,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
   z
     .object({
       VITE_BRIDGE_API_URL: z.string().url(),
+      VITE_BRIDGE_BACKGROUND: z.string().url(),
       VITE_ENABLE_DEPOSIT_WARNING: z.string(),
       VITE_ENABLE_FIAT_EXCHANGE_RATES: z.string(),
       VITE_ENABLE_OUTDATED_NETWORK_MODAL: z.string().optional(),
@@ -288,6 +297,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
       VITE_FIAT_EXCHANGE_RATES_ETHEREUM_USDC_ADDRESS: z.string().length(42).optional(),
       VITE_ICON_PATH: z.string().optional(),
       VITE_LOGO_PATH: z.string().optional(),
+      VITE_LOGO_POSITION: z.string().optional(),
       VITE_NETWORK_NAME: z.string().optional(),
       VITE_NETWORK_SYMBOL: z.string().optional(),
       VITE_OUTDATED_NETWORK_MODAL_MESSAGE_PARAGRAPH_1: z.string().optional(),

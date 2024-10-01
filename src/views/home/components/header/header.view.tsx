@@ -29,15 +29,17 @@ export const Header: FC = () => {
             <SettingIcon />
           </Link>
         )}
-        <Link className={classes.link} to={routes.activity.path}>
-          <ClockIcon />
-          <Typography className={classes.activityLabel} type="body1">
-            Activity
-          </Typography>
+        <Link className={classes.block} to={routes.activity.path}>
+          {logo ? <img className={classes.logo} src={logo}></img> : <Logo className={classes.logo} />}
         </Link>
       </div>
-      <div className={`${classes.block} ${classes.centerBlock}`}>
-        {logo ? <img className={classes.logo} src={logo}></img> : <Logo className={classes.logo} />}
+      <div className={`${classes.link} ${classes.centerBlock}`}>
+        <ClockIcon />
+        <Typography className={classes.activityLabel} type="body1">
+          <Link className={classes.link} to={routes.activity.path}>
+            Activity
+          </Link>
+        </Typography>
       </div>
       <div className={`${classes.block} ${classes.rightBlock}`}>
         <NetworkSelector />

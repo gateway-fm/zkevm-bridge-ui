@@ -27,8 +27,9 @@ export const useHeaderStyles = createUseStyles((theme: Theme) => ({
     justifyContent: "left",
   },
   link: {
+    backgroundColor: theme.palette.grey.main,
     "&:hover": {
-      backgroundColor: theme.palette.grey.main,
+      backgroundColor: theme.palette.success.main,
     },
     alignItems: "center",
     borderRadius: 8,

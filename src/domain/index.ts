@@ -72,6 +72,7 @@ export interface ReportFormEnvEnabled {
 
 export interface Env {
   bridgeApiUrl: string;
+  bridgeBackgroundUrl: string;
   chains: [EthereumChain, ZkEVMChain];
   faviconPath?: string;
   fiatExchangeRates:
@@ -87,6 +88,7 @@ export interface Env {
   forceUpdateGlobalExitRootForL1: boolean;
   isDepositWarningEnabled: boolean;
   logoPath?: string;
+  logoPosition?: string;
   networkName?: string;
   networkSymbol?: string;
   outdatedNetworkModal:
