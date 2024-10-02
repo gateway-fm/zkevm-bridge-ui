@@ -10,8 +10,14 @@ import { areSettingsVisible } from "src/utils/feature-toggles";
 import { useHeaderStyles } from "src/views/home/components/header/header.styles";
 import { NetworkSelector } from "src/views/shared/network-selector/network-selector.view";
 import { Typography } from "src/views/shared/typography/typography.view";
+import { getDeploymentName } from "../../../../utils/labels";
 
-export const Header: FC = () => {
+type HeaderProps = {
+  hideActivity?: boolean;
+  showName?: boolean;
+};
+
+export const Header: FC<HeaderProps> = ({ hideActivity, showName }) => {
   const classes = useHeaderStyles();
   const env = useEnvContext();
 
@@ -19,7 +25,13 @@ export const Header: FC = () => {
     return null;
   }
 
+  const ethereumChain = env.chains[0];
+  const deploymentName = getDeploymentName(ethereumChain);
+  const appName = deploymentName !== undefined ? `${deploymentName} Bridge` : "Bridge";
+
   const logo = env.logoPath;
+
+  const companyPage = "https://www.humanity.org/"
 
   return (
     <header className={classes.header}>
@@ -29,16 +41,21 @@ export const Header: FC = () => {
             <SettingIcon />
           </Link>
         )}
-        <Link className={classes.block} to={routes.activity.path}>
+        <Link className={classes.block} to={companyPage || routes.home.path}>
           {logo ? <img className={classes.logo} src={logo}></img> : <Logo className={classes.logo} />}
         </Link>
       </div>
       <div className={`${classes.link} ${classes.centerBlock}`}>
-        <ClockIcon />
         <Typography className={classes.activityLabel} type="body1">
-          <Link className={classes.link} to={routes.activity.path}>
-            Activity
-          </Link>
+          {!hideActivity && <ClockIcon/>}
+          {!hideActivity && <>
+            <Link className={classes.link} to={routes.activity.path}>
+              Activity
+            </Link>
+          </>}
+          {showName && <Link className={classes.link} to={companyPage || routes.login.path}>
+            {appName}
+          </Link>}
         </Typography>
       </div>
       <div className={`${classes.block} ${classes.rightBlock}`}>

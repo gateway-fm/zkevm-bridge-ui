@@ -44,4 +44,12 @@ export const useHeaderStyles = createUseStyles((theme: Theme) => ({
   rightBlock: {
     justifyContent: "end",
   },
+  appName: {
+    background: theme.palette.grey.main,
+    borderRadius: 56,
+    margin: "0px auto",
+    marginBotton: "4px",
+    // marginBottom: theme.spacing(5),
+    // padding: [theme.spacing(1.25), theme.spacing(4)],
+  },
 }));

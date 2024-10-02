@@ -280,7 +280,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
   z
     .object({
       VITE_BRIDGE_API_URL: z.string().url(),
-      VITE_BRIDGE_BACKGROUND: z.string().url(),
+      VITE_BRIDGE_BACKGROUND: z.string().url().optional(),
       VITE_ENABLE_DEPOSIT_WARNING: z.string(),
       VITE_ENABLE_FIAT_EXCHANGE_RATES: z.string(),
       VITE_ENABLE_OUTDATED_NETWORK_MODAL: z.string().optional(),

@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
+import { Header } from "../home/components/header/header.view";
 import { routerStateParser } from "src/adapters/browser";
 import { getPolicyCheck, setPolicyCheck } from "src/adapters/storage";
-import { ReactComponent as Logo } from "src/assets/polygon-zkevm-logo.svg";
 import { useEnvContext } from "src/contexts/env.context";
 import { useProvidersContext } from "src/contexts/providers.context";
 import { EthereumChainId, PolicyCheck, WalletName } from "src/domain";
@@ -20,6 +20,7 @@ import { Typography } from "src/views/shared/typography/typography.view";
 
 export const Login: FC = () => {
   const classes = useLoginStyles();
+
   const [selectedWallet, setSelectedWallet] = useState<WalletName>();
   const [showPolicyModal, setShowPolicyModal] = useState(false);
   const navigate = useNavigate();
@@ -59,18 +60,24 @@ export const Login: FC = () => {
     return null;
   }
 
-	const logo = env.logoPath;
   const ethereumChain = env.chains[0];
   const deploymentName = getDeploymentName(ethereumChain);
-  const appName = deploymentName !== undefined ? `${deploymentName} Bridge` : "Bridge";
 
   return (
-    <div className={classes.login}>
+    <div
+      className={classes.login}
+      style={{
+        backgroundImage: env?.bridgeBackgroundUrl
+          ? `url('${env.bridgeBackgroundUrl}')`
+          : 'none',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        height: "100%"
+      }}
+    >
+      <Header hideActivity={true} showName={true}/>
       <div className={classes.contentWrapper}>
-        {logo ? <img className={classes.logo} src={logo}></img> : <Logo className={classes.logo} />}
-        <Typography className={classes.appName} type="body1">
-          {appName}
-        </Typography>
         <div className={classes.networkBoxWrapper}>
           <NetworkBox />
         </div>

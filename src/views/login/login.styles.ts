@@ -37,6 +37,9 @@ export const useLoginStyles = createUseStyles((theme: Theme) => ({
     display: "flex",
     flexDirection: "column",
     padding: [0, theme.spacing(2)],
+    width: "100%",
+    minHeight: "100vh",
+    overflow: "hidden"
   },
   logo: {
     height: 120,
