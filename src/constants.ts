@@ -99,6 +99,7 @@ export const getChains = ({
     rpcUrl: string;
   };
 }): Promise<[EthereumChain, ZkEVMChain]> => {
+  let networkName = ""
   const ethereumProvider = new StaticJsonRpcProvider(ethereum.rpcUrl);
   const polygonZkEVMProvider = new StaticJsonRpcProvider(polygonZkEVM.rpcUrl);
   const poeContract = ProofOfEfficiency__factory.connect(
@@ -111,6 +112,9 @@ export const getChains = ({
   );
   if (import.meta.env.VITE_CHAIN_ICON_PATH) {
     polygonZkEVM.iconUrl = import.meta.env.VITE_CHAIN_ICON_PATH;
+  }
+  if (import.meta.env.VITE_NETWORK_NAME) {
+    networkName = import.meta.env.VITE_NETWORK_NAME || ""
   }
 
   return Promise.all([
@@ -156,7 +160,7 @@ export const getChains = ({
           explorerUrl: polygonZkEVM.explorerUrl,
           Icon: polygonZkEVM.iconUrl ? L2Icon(polygonZkEVM.iconUrl) : PolygonZkEVMChainIcon,
           key: "polygon-zkevm",
-          name: polygonZkEVMNetworkName,
+          name: networkName || polygonZkEVMNetworkName,
           nativeCurrency: {
             decimals: metadata.decimals,
             name: metadata.name,
