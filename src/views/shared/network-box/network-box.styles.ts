@@ -9,11 +9,11 @@ export const useNetworkBoxStyles = createUseStyles((theme: Theme) => ({
       opacity: 0.75,
     },
     "&:hover:not(:disabled)": {
-      background: theme.palette.grey.main,
+      background: theme.palette.grey.dark,
     },
     alignItems: "center",
     appearance: "none",
-    background: theme.palette.grey.light,
+    background: theme.palette.primary.main,
     border: "none",
     borderRadius: 8,
     cursor: "pointer",

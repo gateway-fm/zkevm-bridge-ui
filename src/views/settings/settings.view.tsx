@@ -41,7 +41,7 @@ export const Settings: FC = () => {
     <div className={classes.contentWrapper}>
       <Header
         backTo={{ routeKey: "home" }}
-        Subtitle={<Typography type="body2">Polygon zkEVM Bridge v{bridgeVersion}</Typography>}
+        Subtitle={<Typography type="body2">{env?.networkName || `Polygon zkEVM Bridge v${bridgeVersion}`}</Typography>}
         title="Settings"
       />
       <Card className={classes.card}>

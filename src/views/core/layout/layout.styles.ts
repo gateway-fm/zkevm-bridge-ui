@@ -12,7 +12,8 @@ export const useLayoutStyles = createUseStyles((theme: Theme) => ({
     width: "100%",
   },
   layout: {
-    background: theme.palette.grey.light,
+    // background: theme.palette.grey.light,
+    background: theme.palette.black,
     display: "flex",
     flexDirection: "column",
     minHeight: "100vh",

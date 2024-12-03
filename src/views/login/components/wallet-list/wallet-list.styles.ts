@@ -13,12 +13,14 @@ export const useWalletListStyles = createUseStyles((theme: Theme) => ({
     justifyContent: "space-between",
     padding: [theme.spacing(3), theme.spacing(4)],
     transition: theme.hoverTransition,
+    color: theme.palette.white
   },
   walletIcon: {
     marginRight: theme.spacing(2),
   },
   walletInfo: {
     flex: 1,
+    color: theme.palette.white
   },
   walletList: {
     listStyle: "none",
@@ -27,5 +29,6 @@ export const useWalletListStyles = createUseStyles((theme: Theme) => ({
   },
   walletName: {
     marginBottom: theme.spacing(1),
+    color: theme.palette.white
   },
 }));

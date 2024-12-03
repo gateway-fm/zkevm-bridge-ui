@@ -4,7 +4,7 @@ import { Theme } from "src/styles/theme";
 
 export const useTypographyStyles = createUseStyles((theme: Theme) => ({
   body1: {
-    color: theme.palette.black,
+    color: theme.palette.white,
     fontSize: 16,
     fontWeight: 500,
     lineHeight: "20px",
@@ -12,7 +12,7 @@ export const useTypographyStyles = createUseStyles((theme: Theme) => ({
     marginTop: 0,
   },
   body2: {
-    color: theme.palette.grey.dark,
+    color: theme.palette.white,
     fontSize: 14,
     fontWeight: 400,
     lineHeight: "18px",

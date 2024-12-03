@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 
+import { useEnvContext } from "../../../contexts/env.context";
 import { ReactComponent as XMarkIcon } from "src/assets/icons/xmark.svg";
 import { Chain } from "src/domain";
 import { Card } from "src/views/shared/card/card.view";
@@ -15,6 +16,7 @@ interface ChainListProps {
 
 export const ChainList: FC<ChainListProps> = ({ chains, onClick, onClose }) => {
   const classes = useListStyles();
+  const env = useEnvContext()
 
   const onOutsideClick = (event: React.MouseEvent) => {
     if (event.target !== event.currentTarget) {
@@ -37,7 +39,12 @@ export const ChainList: FC<ChainListProps> = ({ chains, onClick, onClose }) => {
             {chains.map((chain) => (
               <button className={classes.button} key={chain.key} onClick={() => onClick(chain)}>
                 <chain.Icon className={classes.icon} />
-                <Typography type="body1">{chain.name}</Typography>
+                {chain.key === "ethereum" && (
+                  <Typography type="body1">{chain.name}</Typography>
+                )}
+                {chain.key === "polygon-zkevm" && (
+                  <Typography type="body1">{env?.networkName || chain.name}</Typography>
+                )}
               </button>
             ))}
           </div>

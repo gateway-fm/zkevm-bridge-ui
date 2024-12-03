@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { useEnvContext } from "../../../../contexts/env.context";
 import { AsyncTask, Token } from "src/domain";
 import { Button } from "src/views/shared/button/button.view";
 
@@ -20,6 +21,7 @@ export const BridgeButton: FC<BridgeButtonProps> = ({
   onBridge,
   token,
 }) => {
+  const env = useEnvContext()
   const bridgeButton = (
     <Button disabled={isDisabled} onClick={onBridge}>
       Bridge
@@ -31,7 +33,7 @@ export const BridgeButton: FC<BridgeButtonProps> = ({
       case "pending": {
         return (
           <Button onClick={onApprove}>
-            {`Allow Polygon zkEVM Bridge to spend my ${token.symbol}`}
+            {`Allow ${env?.networkName || "Polygon zkEVM Bridge"} to spend my ${token.symbol}`}
           </Button>
         );
       }

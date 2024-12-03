@@ -6,7 +6,6 @@ import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains
 import { Chain, Currency, EthereumChain, ProviderError, Token, ZkEVMChain } from "src/domain";
 import { ProofOfEfficiency__factory } from "src/types/contracts/proof-of-efficiency";
 import { getEthereumNetworkName } from "src/utils/labels";
-import { loadEnv } from "./adapters/env";
 
 export const DAI_PERMIT_TYPEHASH =
   "0xea2aa0a1be11a07ed86d755c93467f4f82362b452371d1ba94d1715123511acb";
@@ -103,11 +102,6 @@ export const getChains = ({
     ethereumProvider
   );
 
-  let networkName = ""
-  loadEnv().then(vars => {
-    networkName = vars?.networkName || "";
-  }).catch(console.error);
-
   return Promise.all([
     ethereumProvider.getNetwork().catch(() => Promise.reject(ProviderError.Ethereum)),
     polygonZkEVMProvider.getNetwork().catch(() => Promise.reject(ProviderError.PolygonZkEVM)),
@@ -136,7 +130,7 @@ export const getChains = ({
       explorerUrl: polygonZkEVM.explorerUrl,
       Icon: PolygonZkEVMChainIcon,
       key: "polygon-zkevm",
-      name: networkName || polygonZkEVMNetworkName,
+      name: polygonZkEVMNetworkName,
       nativeCurrency: {
         decimals: 18,
         name: "HAUST",

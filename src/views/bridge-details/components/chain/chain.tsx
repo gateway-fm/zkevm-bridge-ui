@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { useEnvContext } from "../../../../contexts/env.context";
 import { ReactComponent as EthChainIcon } from "src/assets/icons/chains/ethereum.svg";
 import { ReactComponent as PolygonZkEVMChainIcon } from "src/assets/icons/chains/polygon-zkevm.svg";
 import * as domain from "src/domain";
@@ -13,6 +14,7 @@ interface ChainProps {
 
 export const Chain: FC<ChainProps> = ({ chain, className }) => {
   const classes = useChainStyles();
+  const env = useEnvContext()
 
   if (chain.key === "ethereum") {
     return (
@@ -23,7 +25,7 @@ export const Chain: FC<ChainProps> = ({ chain, className }) => {
   } else {
     return (
       <Typography className={className} type="body1">
-        <PolygonZkEVMChainIcon className={classes.polygonZkEvmChain} /> {chain.name}
+        <PolygonZkEVMChainIcon className={classes.polygonZkEvmChain} /> {env?.networkName || chain.name}
       </Typography>
     );
   }

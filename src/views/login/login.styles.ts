@@ -4,7 +4,7 @@ import { Theme } from "src/styles/theme";
 
 export const useLoginStyles = createUseStyles((theme: Theme) => ({
   appName: {
-    background: theme.palette.grey.main,
+    background: theme.palette.lightBlack,
     borderRadius: 56,
     margin: "0px auto",
     marginBottom: theme.spacing(5),
@@ -17,6 +17,7 @@ export const useLoginStyles = createUseStyles((theme: Theme) => ({
   },
   cardHeader: {
     padding: [theme.spacing(3), theme.spacing(4), theme.spacing(2)],
+    color: theme.palette.white
   },
   cardHeaderCentered: {
     textAlign: "center",

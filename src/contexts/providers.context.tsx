@@ -241,7 +241,7 @@ const ProvidersProvider: FC<PropsWithChildren> = (props) => {
             {
               blockExplorerUrls: [chain.explorerUrl],
               chainId: hexValue(chain.chainId),
-              chainName: chain.name,
+              chainName: env?.networkName || chain.name,
               nativeCurrency: chain.nativeCurrency,
               rpcUrls: [chain.provider.connection.url],
             },
@@ -267,7 +267,7 @@ const ProvidersProvider: FC<PropsWithChildren> = (props) => {
           }, IS_SWITCHING_NETWORK_DELAY);
         });
     },
-    [connectedProvider]
+    [connectedProvider, env?.networkName]
   );
 
   const changeNetwork = useCallback(
