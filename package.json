@@ -15,8 +15,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@walletconnect/ethereum-provider": "^1.7.8",
-    "axios": "^0.27.2",
+    "@walletconnect/ethereum-provider": "2.19.4",
+    "axios": "0.30.0",
     "copy-to-clipboard": "^3.3.3",
     "ethers": "^5.7.2",
     "events": "^3.3.0",
@@ -48,6 +48,11 @@
     "vite": "^3.0.0",
     "vite-plugin-checker": "^0.4.9",
     "vite-plugin-svgr": "^2.2.1"
+  },
+  "overrides": {
+    "@walletconnect/jsonrpc-ws-connection": {
+      "ws": "7.5.10"
+    }
   },
   "eslintConfig": {
     "extends": "@iden3/eslint-config-react-ts",
