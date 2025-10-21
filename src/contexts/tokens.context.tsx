@@ -23,6 +23,7 @@ import { useErrorContext } from "src/contexts/error.context";
 import { useProvidersContext } from "src/contexts/providers.context";
 import { Chain, Env, Token } from "src/domain";
 import { Bridge__factory } from "src/types/contracts/bridge";
+import { Bridge_new__factory } from "src/types/contracts/bridge_new";
 import { Erc20__factory } from "src/types/contracts/erc-20";
 import { isTokenEther } from "src/utils/tokens";
 import { isAsyncTaskDataAvailable } from "src/utils/types";
@@ -98,22 +99,58 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
    * Provided a token, its native chain and any other chain, computes the address of the wrapped token on the other chain
    */
   const computeWrappedTokenAddress = useCallback(
-    ({ nativeChain, otherChain, token }: ComputeWrappedTokenAddressParams): Promise<string> => {
+    async ({
+      nativeChain,
+      otherChain,
+      token,
+    }: ComputeWrappedTokenAddressParams): Promise<string> => {
       if (isTokenEther(token, nativeChain)) {
         throw Error("Can't precalculate the wrapper address of Ether");
       }
+
+      const bridgeNewContract = Bridge_new__factory.connect(
+        otherChain.bridgeContractAddress,
+        otherChain.provider
+      );
+
       const bridgeContract = Bridge__factory.connect(
         otherChain.bridgeContractAddress,
         otherChain.provider
       );
 
-      return bridgeContract.precalculatedWrapperAddress(
-        nativeChain.networkId,
-        token.address,
-        token.name,
-        token.symbol,
-        token.decimals
-      );
+      // Try to detect if it's the new bridge by calling version()
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        await bridgeNewContract.version();
+
+        // It's the new bridge, use getTokenWrappedAddress
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+        const wrappedAddress = await bridgeNewContract.getTokenWrappedAddress(
+          nativeChain.networkId,
+          token.address
+        );
+
+        // If the wrapped address is zero, compute it using computeTokenProxyAddress
+        if (wrappedAddress === ethersConstants.AddressZero) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
+          return await bridgeNewContract.computeTokenProxyAddress(
+            nativeChain.networkId,
+            token.address
+          );
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return wrappedAddress;
+      } catch (error) {
+        // It's the old bridge, use precalculatedWrapperAddress
+        return bridgeContract.precalculatedWrapperAddress(
+          nativeChain.networkId,
+          token.address,
+          token.name,
+          token.symbol,
+          token.decimals
+        );
+      }
     },
     []
   );
