@@ -11,7 +11,7 @@ npx typechain --target ethers-v5 --out-dir $BASE_PATH/uniswap-v2-pair "abis/unis
 
 # Generate zkEVM contract types
 npx typechain --target ethers-v5 --out-dir $BASE_PATH/bridge "abis/bridge.json"
-npx typechain --target ethers-v5 --out-dir $BASE_PATH/bridge_new "abis/bridge_new.json"
+npx typechain --target ethers-v5 --out-dir $BASE_PATH/bridgeL2_v1 "abis/bridgeL2_v1.json"
 npx typechain --target ethers-v5 --out-dir $BASE_PATH/proof-of-efficiency "abis/proof-of-efficiency.json"
 npx typechain --target ethers-v5 --out-dir $BASE_PATH/rollup-manager "abis/rollup-manager.json"
 

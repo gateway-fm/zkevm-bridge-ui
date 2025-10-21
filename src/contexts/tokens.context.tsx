@@ -23,7 +23,7 @@ import { useErrorContext } from "src/contexts/error.context";
 import { useProvidersContext } from "src/contexts/providers.context";
 import { Chain, Env, Token } from "src/domain";
 import { Bridge__factory } from "src/types/contracts/bridge";
-import { Bridge_new__factory } from "src/types/contracts/bridge_new";
+import { BridgeL2_v1__factory } from "src/types/contracts/bridgeL2_v1";
 import { Erc20__factory } from "src/types/contracts/erc-20";
 import { isTokenEther } from "src/utils/tokens";
 import { isAsyncTaskDataAvailable } from "src/utils/types";
@@ -108,7 +108,7 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
         throw Error("Can't precalculate the wrapper address of Ether");
       }
 
-      const bridgeNewContract = Bridge_new__factory.connect(
+      const bridgeNewContract = BridgeL2_v1__factory.connect(
         otherChain.bridgeContractAddress,
         otherChain.provider
       );
