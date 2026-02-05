@@ -88,6 +88,12 @@ then
   echo "VITE_REPORT_FORM_URL_ENTRY=$REPORT_FORM_URL_ENTRY" >> $ENV_FILENAME
 fi
 
+# BACKGROUND IMAGE
+if [ ! -z "$SHOW_BACKGROUND_IMAGE" ];
+then
+  echo "VITE_SHOW_BACKGROUND_IMAGE=$SHOW_BACKGROUND_IMAGE" >> $ENV_FILENAME
+fi
+
 echo "Generated .env file:"
 echo "$(cat /app/.env)"
 

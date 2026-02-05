@@ -83,6 +83,7 @@ export type Env = {
   bridgeApiUrl: string;
   chains: [EthereumChain, ZkEVMChain];
   faviconPath?: string;
+  showBackgroundImage: boolean;
   fiatExchangeRates:
     | {
         areEnabled: false;

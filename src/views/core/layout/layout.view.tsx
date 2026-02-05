@@ -35,7 +35,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       <div
         className={classes.layout}
         style={
-          showNewDesign
+          showNewDesign && env?.showBackgroundImage
             ? { backgroundImage: `url(${bg})` }
             : { backgroundColor: theme.palette.grey.light }
         }
