@@ -12,6 +12,7 @@ type Env = {
   VITE_ENABLE_FIAT_EXCHANGE_RATES: string;
   VITE_ENABLE_OUTDATED_NETWORK_MODAL?: string;
   VITE_ENABLE_REPORT_FORM: string;
+  VITE_SHOW_BACKGROUND_IMAGE?: string;
   VITE_ETHEREUM_BRIDGE_CONTRACT_ADDRESS: string;
   VITE_ETHEREUM_EXPLORER_URL: string;
   VITE_ETHEREUM_FORCE_UPDATE_GLOBAL_EXIT_ROOT: string;
@@ -196,6 +197,7 @@ const envToDomain = ({
   VITE_REPORT_FORM_PLATFORM_ENTRY,
   VITE_REPORT_FORM_URL,
   VITE_REPORT_FORM_URL_ENTRY,
+  VITE_SHOW_BACKGROUND_IMAGE,
 }: Env): Promise<domain.Env> => {
   const polygonZkEVMNetworkId = z.coerce.number().positive().parse(VITE_POLYGON_ZK_EVM_NETWORK_ID);
   const isOutdatedNetworkModalEnabled = stringBooleanParser.parse(
@@ -213,6 +215,7 @@ const envToDomain = ({
   const chainIconPath = VITE_CHAIN_ICON_URL;
   const frontendType = VITE_FRONTEND_TYPE ?? "new-design";
   const brandComponents = stringBooleanParser.parse(VITE_BRAND_COMPONENTS ?? "false")
+  const showBackgroundImage = stringBooleanParser.parse(VITE_SHOW_BACKGROUND_IMAGE ?? "true")
 
   const outdatedNetworkModal: domain.Env["outdatedNetworkModal"] = isOutdatedNetworkModalEnabled
     ? {
@@ -277,6 +280,7 @@ const envToDomain = ({
         VITE_REPORT_FORM_URL,
         VITE_REPORT_FORM_URL_ENTRY,
       }),
+      showBackgroundImage,
     };
   });
 };
@@ -318,6 +322,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
       VITE_REPORT_FORM_PLATFORM_ENTRY: z.string().optional(),
       VITE_REPORT_FORM_URL: z.string().optional(),
       VITE_REPORT_FORM_URL_ENTRY: z.string().optional(),
+      VITE_SHOW_BACKGROUND_IMAGE: z.string().optional(),
     })
     .transform(envToDomain)
 );
