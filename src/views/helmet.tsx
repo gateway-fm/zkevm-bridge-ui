@@ -13,17 +13,13 @@ export const AppHead = () => {
           content="Simple user interface to bridge ETH and your favorite ERC-20 tokens from Ethereum to the Polygon zkEVM and back"
           name="description"
         />
-        {env?.faviconPath ? (
+        {env?.faviconPath && (
           <link href={env.faviconPath} rel="icon" type="image/svg+xml" />
-        ) : (
-          <link href="/faviconZkEVM.ico" rel="icon" type="image/svg+xml" />
         )}
         <link href="/logo192.png" rel="apple-touch-icon" />
         <link href="/manifest.json" rel="manifest" />
-        {env?.networkName ? (
+        {env?.networkName && (
           <title>{env.networkName} Bridge</title>
-        ) : (
-          <title>Polygon zkEVM Bridge</title>
         )}
       </Helmet>
     </HelmetProvider>

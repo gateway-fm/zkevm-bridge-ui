@@ -21,3 +21,10 @@ dist
 
 # Generated types
 src/types
+
+# Gas Town (added by gt)
+.runtime/
+.claude/
+.beads/
+.logs/
+state.json
