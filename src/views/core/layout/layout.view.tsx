@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren, useEffect, useState } from "react";
-import bg from "../../../../public/gradient-background.png";
+const bg = "/gradient-background.png";
 
 import { reportError } from "src/adapters/error";
 import LogoGatewayfm from "src/assets/icons/logo-gatewayfm.svg?react";
