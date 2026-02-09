@@ -47,7 +47,7 @@ export const HeaderRedesign: FC = () => {
                 : 62,
         }}
       >
-        {logoPath ? <img className={classes.logo} src={logoPath} alt={networkName} /> : networkName}
+        {logoPath ? <img alt={networkName} className={classes.logo} src={logoPath} /> : networkName}
       </div>
       <div className={`${classes.block} ${classes.rightBlock}`}>
         <NetworkSelectorRedesign />
