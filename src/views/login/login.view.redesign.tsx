@@ -43,6 +43,7 @@ export const LoginRedesign: FC = () => {
   }
 
   const name = env.networkName;
+  const logoPath = env.logoPath;
   const ethereumChain = env.chains[0];
   const appName = name ? `${name} Bridge` : "Bridge";
 
@@ -53,9 +54,13 @@ export const LoginRedesign: FC = () => {
           <Typography className={classes.appName} type="body1">
             <ArrowDoubleIcon className={classes.appNameIcon} /> {appName}
           </Typography>
-          <Typography className={classes.networkName} type="body1">
-            {name ? name : env.chains[1].name}
-          </Typography>
+          {logoPath ? (
+            <img alt={name} className={classes.networkLogo} src={logoPath} />
+          ) : (
+            <Typography className={classes.networkName} type="body1">
+              {name ? name : env.chains[1].name}
+            </Typography>
+          )}
         </div>
         <div className={classes.networkBoxWrapper}>
           <NetworkBoxRedesign />
