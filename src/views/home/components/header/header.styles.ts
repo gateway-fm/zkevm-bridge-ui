@@ -79,6 +79,9 @@ export const useHeaderRedesignStyles = createUseStyles((theme: Theme) => ({
   leftBlock: {
     justifyContent: "left",
   },
+  logo: {
+    height: 56,
+  },
   link: {
     "&:hover": {
       boxShadow: `

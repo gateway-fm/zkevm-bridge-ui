@@ -60,7 +60,7 @@ export const useNetworkBoxRedesignStyles = createUseStyles((theme: Theme) => ({
     alignItems: "center",
     appearance: "none",
     backgroundColor: theme.palette.primary.mainRedesign,
-    border: "1px solid #EEE8FF",
+    border: `1px solid ${theme.palette.primary.light}`,
     borderRadius: 8,
     color: theme.palette.white,
     cursor: "pointer",
@@ -86,7 +86,7 @@ export const useNetworkBoxRedesignStyles = createUseStyles((theme: Theme) => ({
       background: theme.palette.grey.light,
     },
     alignItems: "center",
-    border: "1px solid #EEE8FF",
+    border: `1px solid ${theme.palette.primary.light}`,
     borderRadius: 28,
     display: "flex",
     fontSize: 12,
@@ -183,6 +183,7 @@ export const useNetworkBoxRedesignStyles = createUseStyles((theme: Theme) => ({
     flexDirection: "column",
   },
   reportIcon: {
+    color: theme.palette.primary.main,
     marginRight: theme.spacing(0.5),
     width: 15,
     [theme.breakpoints.downM]: {
