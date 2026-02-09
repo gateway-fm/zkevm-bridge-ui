@@ -37,7 +37,7 @@ export const useWalletListRedesignStyles = createUseStyles((theme: Theme) => ({
     alignItems: "center",
     appearance: "none",
     backgroundColor: theme.palette.primary.mainRedesign,
-    border: "1px solid #EEE8FF",
+    border: `1px solid ${theme.palette.primary.light}`,
     borderRadius: 8,
     color: theme.palette.white,
     cursor: "pointer",

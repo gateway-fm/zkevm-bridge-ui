@@ -19,6 +19,7 @@ export const HeaderRedesign: FC = () => {
   }
 
   const networkName = env.networkName;
+  const logoPath = env.logoPath;
 
   return (
     <header className={classes.header}>
@@ -37,7 +38,7 @@ export const HeaderRedesign: FC = () => {
       </div>
       <div
         className={`${classes.block} ${classes.centerBlock}`}
-        style={{
+        style={logoPath ? undefined : {
           fontSize:
             typeof window !== "undefined" && window.innerWidth <= 788
               ? 28
@@ -46,7 +47,7 @@ export const HeaderRedesign: FC = () => {
                 : 62,
         }}
       >
-        {networkName}
+        {logoPath ? <img className={classes.logo} src={logoPath} alt={networkName} /> : networkName}
       </div>
       <div className={`${classes.block} ${classes.rightBlock}`}>
         <NetworkSelectorRedesign />
