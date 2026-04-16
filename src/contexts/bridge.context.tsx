@@ -14,7 +14,7 @@ import {
   BRIDGE_CALL_GAS_LIMIT_INCREASE_PERCENTAGE,
   BRIDGE_CALL_PERMIT_GAS_LIMIT_INCREASE,
   FIAT_DISPLAY_PRECISION,
-  GAS_PRICE_INCREASE_PERCENTAGE,
+
   PENDING_TX_TIMEOUT,
 } from "src/constants";
 import { useEnvContext } from "src/contexts/env.context";
@@ -730,17 +730,17 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
       const { gasPrice, maxFeePerGas } = await from.provider.getFeeData();
 
       if (maxFeePerGas) {
-        return { data: { gasLimit, maxFeePerGas }, type: "eip-1559" };
+        return {
+          data: { gasLimit, maxFeePerGas },
+          type: "eip-1559",
+        };
       } else {
         const legacyGasPrice = gasPrice || (await from.provider.getGasPrice());
-        const gasPriceIncrease = legacyGasPrice
-          .div(BigNumber.from(100))
-          .mul(GAS_PRICE_INCREASE_PERCENTAGE);
 
         return {
           data: {
             gasLimit,
-            gasPrice: legacyGasPrice.add(gasPriceIncrease),
+            gasPrice: legacyGasPrice,
           },
           type: "legacy",
         };
@@ -769,12 +769,12 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
 
       const { account, chainId, provider } = connectedProvider.data;
       const contract = Bridge__factory.connect(from.bridgeContractAddress, provider.getSigner());
+      const estimatedGas = gas
+        ? gas
+        : await estimateBridgeGas({ destinationAddress, from, to, token, tokenSpendPermission });
       const overrides: CallOverrides = {
+        gasLimit: estimatedGas.data.gasLimit,
         value: isTokenEther(token, from) ? amount : undefined,
-        ...(gas
-          ? gas.data
-          : (await estimateBridgeGas({ destinationAddress, from, to, token, tokenSpendPermission }))
-              .data),
       };
 
       const executeBridge = async () => {
