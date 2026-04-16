@@ -730,9 +730,14 @@ const BridgeProvider: FC<PropsWithChildren> = (props) => {
       const { gasPrice, maxFeePerGas, maxPriorityFeePerGas } = await from.provider.getFeeData();
 
       if (maxFeePerGas && maxPriorityFeePerGas) {
-        const adjustedMaxFeePerGas = maxFeePerGas.lt(maxPriorityFeePerGas)
-          ? maxPriorityFeePerGas.mul(2)
-          : maxFeePerGas;
+        let adjustedMaxFeePerGas = maxFeePerGas;
+        if (maxFeePerGas.lt(maxPriorityFeePerGas)) {
+          const block = await from.provider.getBlock("latest");
+          const baseFee = block.baseFeePerGas;
+          adjustedMaxFeePerGas = baseFee
+            ? baseFee.mul(2).add(maxPriorityFeePerGas)
+            : maxPriorityFeePerGas.mul(2);
+        }
         return {
           data: { gasLimit, maxFeePerGas: adjustedMaxFeePerGas, maxPriorityFeePerGas },
           type: "eip-1559",
