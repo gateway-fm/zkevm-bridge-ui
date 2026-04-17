@@ -104,10 +104,12 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
 
   const getWrappedAddressCache = useCallback((): Record<string, string> => {
     try {
-      return JSON.parse(localStorage.getItem(WRAPPED_ADDR_CACHE_KEY) || "{}") as Record<
-        string,
-        string
-      >;
+      const parsed: unknown = JSON.parse(localStorage.getItem(WRAPPED_ADDR_CACHE_KEY) || "{}");
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        // eslint-disable-next-line no-type-assertion/no-type-assertion
+        return parsed as Record<string, string>;
+      }
+      return {};
     } catch {
       return {};
     }
@@ -151,7 +153,7 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
 
       // Cache the version() check per bridge address to avoid redundant RPC calls
       const versionKey = otherChain.bridgeContractAddress;
-      if (!bridgeVersionCache.current[versionKey]) {
+      if (bridgeVersionCache.current[versionKey] === undefined) {
         bridgeVersionCache.current[versionKey] = bridgeNewContract
           // eslint-disable-next-line @typescript-eslint/no-unsafe-call
           .version()

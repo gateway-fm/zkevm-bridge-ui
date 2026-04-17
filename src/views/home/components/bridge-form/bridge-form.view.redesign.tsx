@@ -164,16 +164,21 @@ export const BridgeFormRedesign: FC<BridgeFormProps> = ({
           .catch(() => ({ balance: null, error: "Couldn't retrieve token balance" }))
       );
 
-      Promise.all(balancePromises).then((results) => {
-        if (fetchId !== balanceFetchId.current) return;
+      void Promise.all(balancePromises).then((results) => {
+        if (fetchId !== balanceFetchId.current) {
+          return;
+        }
         callIfMounted(() => {
           setTokens(
-            chainTokens.map((token, i) => ({
-              ...token,
-              balance: results[i].balance
-                ? { data: results[i].balance as BigNumber, status: "successful" as const }
-                : { error: results[i].error ?? "Unknown error", status: "failed" as const },
-            }))
+            chainTokens.map((token, i) => {
+              const balance = results[i].balance;
+              return {
+                ...token,
+                balance: balance
+                  ? { data: balance, status: "successful" as const }
+                  : { error: results[i].error ?? "Unknown error", status: "failed" as const },
+              };
+            })
           );
         });
       });
