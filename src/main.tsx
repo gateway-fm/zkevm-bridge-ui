@@ -1,4 +1,3 @@
-import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { ThemeProvider } from "react-jss";
 import { BrowserRouter } from "react-router-dom";
@@ -14,11 +13,9 @@ if (container === null) {
 }
 
 createRoot(container).render(
-  <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <App />
-      </ThemeProvider>
-    </BrowserRouter>
-  </StrictMode>
+  <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </BrowserRouter>
 );

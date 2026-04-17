@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { AmountInputRedesign } from "../amount-input/amount-input.view.redesign";
 import { TokenSelectorRedesign } from "../token-selector/token-selector.view.redesign";
@@ -140,90 +140,66 @@ export const BridgeFormRedesign: FC<BridgeFormProps> = ({
     [account, getErc20TokenBalance]
   );
 
+  const balanceFetchId = useRef(0);
+
   useEffect(() => {
-    // Load all the tokens for the selected chain without their balance
+    // Load all the tokens for the selected chain and fetch their balances
     if (selectedChains && defaultTokens) {
       const { from } = selectedChains;
       const chainTokens = [...defaultTokens, ...getChainCustomTokens(from)];
+      const fetchId = ++balanceFetchId.current;
 
+      // Set tokens to loading and fire all balance fetches in the same tick
+      // (JsonRpcBatchProvider batches these into a single HTTP request)
       setTokens(
         chainTokens.map((token) => ({
           ...token,
-          balance: {
-            status: "pending",
-          },
+          balance: { status: "loading" },
         }))
       );
-    }
-  }, [defaultTokens, selectedChains]);
 
-  useEffect(() => {
-    // Load the balances of all the tokens of the primary chain (from)
-    const areTokensPending = tokens?.some((tkn) => tkn.balance?.status === "pending");
-
-    if (selectedChains && tokens && areTokensPending) {
-      const getUpdatedTokens = (tokens: Token[] | undefined, updatedToken: Token) =>
-        tokens
-          ? tokens.map((tkn) =>
-            tkn.address === updatedToken.address && tkn.chainId === updatedToken.chainId
-              ? updatedToken
-              : tkn
-          )
-          : undefined;
-
-      setTokens(() =>
-        tokens.map((token: Token) => {
-          getTokenBalance(token, selectedChains.from)
-            .then((balance): void => {
-              callIfMounted(() => {
-                const updatedToken: Token = {
-                  ...token,
-                  balance: {
-                    data: balance,
-                    status: "successful",
-                  },
-                };
-
-                setTokens((currentTokens) => getUpdatedTokens(currentTokens, updatedToken));
-              });
-            })
-            .catch(() => {
-              callIfMounted(() => {
-                const updatedToken: Token = {
-                  ...token,
-                  balance: {
-                    error: "Couldn't retrieve token balance",
-                    status: "failed",
-                  },
-                };
-
-                setTokens((currentTokens) => getUpdatedTokens(currentTokens, updatedToken));
-              });
-            });
-
-          return { ...token, balance: { status: "loading" } };
-        })
+      const balancePromises = chainTokens.map((token) =>
+        getTokenBalance(token, from)
+          .then((balance) => ({ balance, error: null }))
+          .catch(() => ({ balance: null, error: "Couldn't retrieve token balance" }))
       );
+
+      Promise.all(balancePromises).then((results) => {
+        if (fetchId !== balanceFetchId.current) return;
+        callIfMounted(() => {
+          setTokens(
+            chainTokens.map((token, i) => ({
+              ...token,
+              balance: results[i].balance
+                ? { data: results[i].balance as BigNumber, status: "successful" as const }
+                : { error: results[i].error ?? "Unknown error", status: "failed" as const },
+            }))
+          );
+        });
+      });
     }
-  }, [callIfMounted, defaultTokens, getTokenBalance, selectedChains, tokens]);
+  }, [account, callIfMounted, defaultTokens, getTokenBalance, selectedChains]);
 
   useEffect(() => {
-    // Load the balance of the selected token in both networks
-    if (selectedChains && token) {
-      setBalanceFrom({ status: "loading" });
-      setBalanceTo({ status: "loading" });
+    // Sync "from" balance from the already-fetched tokens list
+    if (token) {
+      const cachedToken = tokens?.find(
+        (tkn) => tkn.address === token.address && tkn.chainId === token.chainId
+      );
+      if (cachedToken?.balance?.status === "successful" && cachedToken.balance.data) {
+        setBalanceFrom({ data: cachedToken.balance.data, status: "successful" });
+      } else if (cachedToken?.balance?.status === "failed") {
+        setBalanceFrom({ error: "Couldn't retrieve token balance", status: "failed" });
+      } else {
+        setBalanceFrom({ status: "loading" });
+      }
+    }
+  }, [token, tokens]);
 
-      getTokenBalance(token, selectedChains.from)
-        .then((balance) =>
-          callIfMounted(() => {
-            setBalanceFrom({ data: balance, status: "successful" });
-          })
-        )
-        .catch(() => {
-          callIfMounted(() => {
-            setBalanceFrom({ error: "Couldn't retrieve token balance", status: "failed" });
-          });
-        });
+  useEffect(() => {
+    // Only fetch the "to" chain balance (from balance comes from the bulk token fetch above)
+    if (selectedChains && token) {
+      setBalanceTo({ status: "loading" });
       getTokenBalance(token, selectedChains.to)
         .then((balance) =>
           callIfMounted(() => {

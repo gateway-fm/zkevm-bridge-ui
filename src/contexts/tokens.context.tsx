@@ -98,6 +98,30 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
   /**
    * Provided a token, its native chain and any other chain, computes the address of the wrapped token on the other chain
    */
+  const bridgeVersionCache = useRef<Record<string, Promise<boolean>>>({});
+
+  const WRAPPED_ADDR_CACHE_KEY = "wrapped-token-addresses";
+
+  const getWrappedAddressCache = useCallback((): Record<string, string> => {
+    try {
+      return JSON.parse(localStorage.getItem(WRAPPED_ADDR_CACHE_KEY) || "{}") as Record<
+        string,
+        string
+      >;
+    } catch {
+      return {};
+    }
+  }, []);
+
+  const setWrappedAddressCache = useCallback(
+    (key: string, address: string) => {
+      const cache = getWrappedAddressCache();
+      cache[key] = address;
+      localStorage.setItem(WRAPPED_ADDR_CACHE_KEY, JSON.stringify(cache));
+    },
+    [getWrappedAddressCache]
+  );
+
   const computeWrappedTokenAddress = useCallback(
     async ({
       nativeChain,
@@ -106,6 +130,13 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
     }: ComputeWrappedTokenAddressParams): Promise<string> => {
       if (isTokenEther(token, nativeChain)) {
         throw Error("Can't precalculate the wrapper address of Ether");
+      }
+
+      // Check localStorage cache first (wrapped addresses are deterministic)
+      const cacheKey = `${otherChain.bridgeContractAddress}-${nativeChain.networkId}-${token.address}`;
+      const cached = getWrappedAddressCache()[cacheKey];
+      if (cached) {
+        return cached;
       }
 
       const bridgeNewContract = BridgeL2_v1__factory.connect(
@@ -118,11 +149,20 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
         otherChain.provider
       );
 
-      // Try to detect if it's the new bridge by calling version()
-      try {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        await bridgeNewContract.version();
+      // Cache the version() check per bridge address to avoid redundant RPC calls
+      const versionKey = otherChain.bridgeContractAddress;
+      if (!bridgeVersionCache.current[versionKey]) {
+        bridgeVersionCache.current[versionKey] = bridgeNewContract
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+          .version()
+          .then(() => true)
+          .catch(() => false);
+      }
+      const isNewBridge = await bridgeVersionCache.current[versionKey];
 
+      let result: string;
+
+      if (isNewBridge) {
         // It's the new bridge, use getTokenWrappedAddress
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
         const wrappedAddress = await bridgeNewContract.getTokenWrappedAddress(
@@ -132,18 +172,18 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
 
         // If the wrapped address is zero, compute it using computeTokenProxyAddress
         if (wrappedAddress === ethersConstants.AddressZero) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
-          return await bridgeNewContract.computeTokenProxyAddress(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+          result = await bridgeNewContract.computeTokenProxyAddress(
             nativeChain.networkId,
             token.address
           );
+        } else {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          result = wrappedAddress;
         }
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-        return wrappedAddress;
-      } catch (error) {
+      } else {
         // It's the old bridge, use precalculatedWrapperAddress
-        return bridgeContract.precalculatedWrapperAddress(
+        result = await bridgeContract.precalculatedWrapperAddress(
           nativeChain.networkId,
           token.address,
           token.name,
@@ -151,8 +191,12 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
           token.decimals
         );
       }
+
+      // Cache the result for future page loads
+      setWrappedAddressCache(cacheKey, result);
+      return result;
     },
-    []
+    [getWrappedAddressCache, setWrappedAddressCache]
   );
 
   /**

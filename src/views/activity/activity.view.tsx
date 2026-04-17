@@ -262,6 +262,8 @@ export const Activity: FC = () => {
     callIfMounted,
   ]);
 
+  const rollupIdRef = useRef<number | null>(null);
+
   useEffect(() => {
     if (env) {
       // eslint-disable-next-line sort-destructure-keys/sort-destructure-keys
@@ -274,8 +276,10 @@ export const Activity: FC = () => {
             : { status: "loading" }
         );
         try {
-          const id = await contract.rollupAddressToID(poeContractAddress);
-          const newBatch = await contract.getLastVerifiedBatch(id);
+          if (!rollupIdRef.current) {
+            rollupIdRef.current = await contract.rollupAddressToID(poeContractAddress);
+          }
+          const newBatch = await contract.getLastVerifiedBatch(rollupIdRef.current);
           setLastVerifiedBatch({ data: newBatch, status: "successful" });
         } catch {
           setLastVerifiedBatch({
