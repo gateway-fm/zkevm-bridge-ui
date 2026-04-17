@@ -1,5 +1,20 @@
-import { StaticJsonRpcProvider } from "@ethersproject/providers";
+import { JsonRpcBatchProvider, Network } from "@ethersproject/providers";
 import { ethers } from "ethers";
+
+/**
+ * JsonRpcBatchProvider with cached network detection.
+ * Avoids repeated eth_chainId calls on every batch (same behavior as StaticJsonRpcProvider).
+ */
+class StaticJsonRpcBatchProvider extends JsonRpcBatchProvider {
+  private _staticNetwork: Promise<Network> | null = null;
+
+  async detectNetwork(): Promise<Network> {
+    if (!this._staticNetwork) {
+      this._staticNetwork = super.detectNetwork();
+    }
+    return this._staticNetwork;
+  }
+}
 
 import { defaultAbiCoder } from "ethers/lib/utils";
 import { L2Icon } from "./assets/network-icon";
@@ -47,7 +62,7 @@ export const TOKEN_DISPLAY_PRECISION = 8;
 
 export const SNACKBAR_AUTO_HIDE_DURATION = 5 * 1000; //5s in ms
 
-export const AUTO_REFRESH_RATE = 10 * 1000; //10s in ms
+export const AUTO_REFRESH_RATE = 30 * 1000; //30s in ms
 
 export const PAGE_SIZE = 25;
 
@@ -99,8 +114,8 @@ export const getChains = ({
     rpcUrl: string;
   };
 }): Promise<[EthereumChain, ZkEVMChain]> => {
-  const ethereumProvider = new StaticJsonRpcProvider(ethereum.rpcUrl);
-  const polygonZkEVMProvider = new StaticJsonRpcProvider(polygonZkEVM.rpcUrl);
+  const ethereumProvider = new StaticJsonRpcBatchProvider(ethereum.rpcUrl);
+  const polygonZkEVMProvider = new StaticJsonRpcBatchProvider(polygonZkEVM.rpcUrl);
   const poeContract = ProofOfEfficiency__factory.connect(
     ethereum.poeContractAddress,
     ethereumProvider
