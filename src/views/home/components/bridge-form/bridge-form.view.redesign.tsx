@@ -5,7 +5,6 @@ import { AmountInputRedesign } from "../amount-input/amount-input.view.redesign"
 import { TokenSelectorRedesign } from "../token-selector/token-selector.view.redesign";
 import { addCustomToken, getChainCustomTokens, removeCustomToken } from "src/adapters/storage";
 import CaretDown from "src/assets/icons/caret-down.svg?react";
-import InfoIcon from "src/assets/icons/info.svg?react";
 import { getGasToken } from "src/constants";
 import { useEnvContext } from "src/contexts/env.context";
 import { useProvidersContext } from "src/contexts/providers.context";
@@ -15,6 +14,7 @@ import { useCallIfMounted } from "src/hooks/use-call-if-mounted";
 import { isTokenEther, isWETH, selectTokenAddress } from "src/utils/tokens";
 import { isAsyncTaskDataAvailable } from "src/utils/types";
 import { useBridgeFormRedesignStyles } from "src/views/home/components/bridge-form/bridge-form.styles";
+import { BillionsRewardBanner } from "src/views/shared/billions-reward-banner/billions-reward-banner.view";
 import { Button } from "src/views/shared/button/button.view";
 import { CardRedesign } from "src/views/shared/card/card.view.redesign";
 import { ChainListRedesign } from "src/views/shared/chain-list/chain-list.view.redesign";
@@ -323,19 +323,7 @@ export const BridgeFormRedesign: FC<BridgeFormProps> = ({
             />
           </div>
         </div>
-
-        {env.isBillionsRewardBannerEnabled && (
-          <div className={classes.billionsRewardBanner}>
-            <span className={classes.billionsRewardBannerIcon}>
-              <InfoIcon />
-            </span>
-            <Typography type="body2">
-              To claim &amp; stake your Billions Reward, bridge a total of{" "}
-              <strong>0.003 ETH</strong> from Ethereum Mainnet to Billions.{" "}
-              <strong>0.001 ETH</strong> is required for covering gas fees
-            </Typography>
-          </div>
-        )}
+        <BillionsRewardBanner />
       </CardRedesign>
       <div className={classes.button}>
         <Button disabled={!amount || amount.isZero() || inputError !== undefined} type="submit">

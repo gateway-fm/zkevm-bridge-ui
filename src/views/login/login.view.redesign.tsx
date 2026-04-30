@@ -10,6 +10,7 @@ import { useProvidersContext } from "src/contexts/providers.context";
 import { EthereumChainId, WalletName } from "src/domain";
 import { routes } from "src/routes";
 import { useLoginRedesignStyles } from "src/views/login/login.styles";
+import { BillionsRewardBanner } from "src/views/shared/billions-reward-banner/billions-reward-banner.view";
 import { ErrorMessage } from "src/views/shared/error-message/error-message.view";
 import { InfoBanner } from "src/views/shared/info-banner/info-banner.view";
 import { Typography } from "src/views/shared/typography/typography.view";
@@ -71,6 +72,7 @@ export const LoginRedesign: FC = () => {
             <ErrorMessage error={connectedProvider.error} />
           )}
         </div>
+        <BillionsRewardBanner />
         {ethereumChain.chainId !== EthereumChainId.MAINNET && (
           <InfoBanner message={`Connect with ${ethereumChain.name} environment`} />
         )}
