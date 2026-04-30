@@ -126,6 +126,34 @@ export const useBridgeFormStyles = createUseStyles((theme: Theme) => ({
 }));
 
 export const useBridgeFormRedesignStyles = createUseStyles((theme: Theme) => ({
+  billionsRewardBanner: {
+    alignItems: "flex-start",
+    background: theme.palette.primary.light,
+    borderRadius: 12,
+    color: theme.palette.black,
+    display: "flex",
+    gap: theme.spacing(1.5),
+    padding: theme.spacing(2),
+  },
+  billionsRewardBannerIcon: {
+    "& svg": {
+      height: 14,
+      width: 14,
+    },
+    "& svg path": {
+      fill: theme.palette.white,
+    },
+    alignItems: "center",
+    background: theme.palette.primary.main,
+    borderRadius: "50%",
+    color: theme.palette.white,
+    display: "flex",
+    flexShrink: 0,
+    height: 24,
+    justifyContent: "center",
+    marginTop: 2,
+    width: 24,
+  },
   button: {
     alignItems: "center",
     display: "flex",

@@ -8,6 +8,7 @@ type Env = {
   VITE_BRAND_COMPONENTS?: string;
   VITE_BRIDGE_API_URL: string;
   VITE_CHAIN_ICON_URL?: string;
+  VITE_ENABLE_BILLIONS_REWARD_BANNER?: string;
   VITE_ENABLE_DEPOSIT_WARNING: string;
   VITE_ENABLE_FIAT_EXCHANGE_RATES: string;
   VITE_ENABLE_OUTDATED_NETWORK_MODAL?: string;
@@ -166,6 +167,7 @@ const envToDomain = ({
   VITE_BRAND_COMPONENTS,
   VITE_BRIDGE_API_URL,
   VITE_CHAIN_ICON_URL,
+  VITE_ENABLE_BILLIONS_REWARD_BANNER,
   VITE_ENABLE_DEPOSIT_WARNING,
   VITE_ENABLE_FIAT_EXCHANGE_RATES,
   VITE_ENABLE_OUTDATED_NETWORK_MODAL,
@@ -229,6 +231,9 @@ const envToDomain = ({
         isEnabled: false,
       };
   const isDepositWarningEnabled = stringBooleanParser.parse(VITE_ENABLE_DEPOSIT_WARNING);
+  const isBillionsRewardBannerEnabled = stringBooleanParser.parse(
+    VITE_ENABLE_BILLIONS_REWARD_BANNER ?? "false"
+  );
 
   return getChains({
     ethereum: {
@@ -268,6 +273,7 @@ const envToDomain = ({
       forceUpdateGlobalExitRootForL1,
       frontendType,
       iconPath,
+      isBillionsRewardBannerEnabled,
       isDepositWarningEnabled,
       logoPath,
       networkName,
@@ -291,6 +297,7 @@ const envParser = StrictSchema<Env, domain.Env>()(
       VITE_BRAND_COMPONENTS: z.string().optional(),
       VITE_BRIDGE_API_URL: z.string().url(),
       VITE_CHAIN_ICON_URL: z.string().optional(),
+      VITE_ENABLE_BILLIONS_REWARD_BANNER: z.string().optional(),
       VITE_ENABLE_DEPOSIT_WARNING: z.string(),
       VITE_ENABLE_FIAT_EXCHANGE_RATES: z.string(),
       VITE_ENABLE_OUTDATED_NETWORK_MODAL: z.string().optional(),

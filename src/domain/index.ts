@@ -95,6 +95,7 @@ export type Env = {
       };
   forceUpdateGlobalExitRootForL1: boolean;
   frontendType: string;
+  isBillionsRewardBannerEnabled: boolean;
   isDepositWarningEnabled: boolean;
   logoPath?: string;
   networkName?: string;
