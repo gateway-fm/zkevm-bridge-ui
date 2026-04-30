@@ -149,7 +149,7 @@
     "chainId": 1,
     "symbol": "BILL",
     "decimals": 18,
-    "logoURI": "https://d2e6b8w31txsjq.cloudfront.net/Favicon.png",
+    "logoURI": "/icons/tokens/bill.png",
     "wrappedToken": {
       "address": "0xb060E40C3B053C33D458f7105F95DA52741CAb62",
       "chainId": 45056
