@@ -410,7 +410,16 @@ const TokensProvider: FC<PropsWithChildren> = (props) => {
               if (!isTokenEther(gasToken, ethereumChain)) {
                 tokens.push(gasToken);
               }
-              tokens.push(getEtherToken(ethereumChain), ...chainTokens);
+              const billIdx = chainTokens.findIndex((t) => t.symbol === "BILL");
+              const billToken = billIdx !== -1 ? chainTokens[billIdx] : null;
+              const otherTokens =
+                billIdx !== -1
+                  ? chainTokens.filter((_, i) => i !== billIdx)
+                  : chainTokens;
+              if (billToken) {
+                tokens.push(billToken);
+              }
+              tokens.push(getEtherToken(ethereumChain), ...otherTokens);
               cleanupCustomTokens(tokens);
               setTokens(tokens);
             })
