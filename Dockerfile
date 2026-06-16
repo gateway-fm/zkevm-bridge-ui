@@ -13,6 +13,9 @@ RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
 # Update Alpine packages
 RUN apk update && apk upgrade --no-cache
 
+# PRST-3867: patch openssl libs for CVE-2026-45447 (libssl3/libcrypto3 3.5.6-r0 -> 3.5.7-r0)
+RUN apk add --no-cache --upgrade libssl3 libcrypto3
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
