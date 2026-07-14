@@ -31,5 +31,5 @@ jobs:
           push: true
           pull: true
           tags: |
-            gatewayfm/zkevm-bridge-ui-generic:1.1.22
+            gatewayfm/zkevm-bridge-ui-generic:1.1.23
             gatewayfm/zkevm-bridge-ui-generic:latest
