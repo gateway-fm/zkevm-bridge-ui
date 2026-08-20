@@ -7,6 +7,7 @@ import { useEnvContext } from "src/contexts/env.context";
 import { routes } from "src/routes";
 import { areSettingsVisible } from "src/utils/feature-toggles";
 import { useHeaderRedesignStyles } from "src/views/home/components/header/header.styles";
+import { BrandHeading } from "src/views/shared/brand-heading/brand-heading.view";
 import { NetworkSelectorRedesign } from "src/views/shared/network-selector/network-selector.view.redesign";
 import { Typography } from "src/views/shared/typography/typography.view";
 
@@ -47,7 +48,11 @@ export const HeaderRedesign: FC = () => {
                 : 62,
         }}
       >
-        {logoPath ? <img alt={networkName} className={classes.logo} src={logoPath} /> : networkName}
+        {logoPath ? (
+          <img alt={networkName} className={classes.logo} src={logoPath} />
+        ) : (
+          <BrandHeading name={networkName ?? ""} />
+        )}
       </div>
       <div className={`${classes.block} ${classes.rightBlock}`}>
         <NetworkSelectorRedesign />

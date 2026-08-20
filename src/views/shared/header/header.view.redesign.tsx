@@ -6,7 +6,6 @@ import ArrowLeftIcon from "src/assets/icons/arrow-left.svg?react";
 import { RouterState } from "src/domain";
 import { routes } from "src/routes";
 import { useHeaderRedesignStyles } from "src/views/shared/header/header.styles";
-import { Typography } from "src/views/shared/typography/typography.view";
 
 type HeaderProps = {
   Subtitle?: ReactElement;
@@ -29,7 +28,7 @@ export const HeaderRedesign: FC<HeaderProps> = ({ backTo, Subtitle, title }) => 
           </button>
         </div>
         <div className={`${classes.block} ${classes.centerBlock}`}>
-          <Typography type="h1">{title}</Typography>
+          <div className={classes.headerTitle}>{title}</div>
         </div>
         <div className={`${classes.block} ${classes.rightBlock}`}>
           <NetworkSelectorRedesign />

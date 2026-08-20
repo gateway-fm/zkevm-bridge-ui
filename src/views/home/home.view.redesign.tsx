@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { NetworkBoxRedesign } from "../shared/network-box/network-box.view.redesign";
 import { BridgeFormRedesign } from "./components/bridge-form/bridge-form.view.redesign";
 import { HeaderRedesign } from "./components/header/header.view.redesign";
 import { getIsDepositWarningDismissed, setIsDepositWarningDismissed } from "src/adapters/storage";
@@ -63,13 +62,12 @@ export const HomeRedesign = (): JSX.Element => {
     <>
      <div className={classes.ethereumAddress}>
       <MetaMaskIcon className={classes.metaMaskIcon} />
+      <span className={classes.statusDot} />
       <Typography type="body1">
        {getPartiallyHiddenEthereumAddress(connectedProvider.data.account)}
       </Typography>
      </div>
      <div className={classes.networkBoxWrapper}>
-      <NetworkBoxRedesign />
-
       <BridgeFormRedesign
        account={connectedProvider.data.account}
        formData={formData}

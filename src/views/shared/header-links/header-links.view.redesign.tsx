@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useHeaderLinksRedesignStyles } from "./header-links.styles";
-import ArrowRight  from "src/assets/icons/arrow-right-white.svg?react";
 import BurgerMenuIcon  from "src/assets/icons/burger-menu.svg?react";
-import LogoGatewayfm  from "src/assets/icons/logo-gatewayfm.svg?react";
+import { brand } from "src/brands";
+import { AddNetworkButton } from "src/views/shared/add-network-button/add-network-button.view";
 
 type LinkItem = { title: string; url: string };
+
+const Logo = brand.assets.Logo;
 
 export const HeaderLinks = () => {
   const [openBurgerMenu, setOpenBurgerMenu] = useState(false);
@@ -12,23 +14,21 @@ export const HeaderLinks = () => {
   const burgerIconRef = useRef<HTMLDivElement>(null);
   const classes = useHeaderLinksRedesignStyles();
   const isMobile = window.innerWidth < 788;
+  const { deployButton } = brand.header;
 
   const linksList: LinkItem[] = [
-    { title: "Rollup", url: "https://gateway.fm/presto" },
-    { title: "Stakeway", url: "https://stakeway.com/" },
-    { title: "RPC", url: "https://gateway.fm/rpc" },
-    { title: "Blog", url: "https://gateway.fm/blog" },
-    { title: "About", url: "https://gateway.fm/about" },
-    { title: "Careers", url: "https://boards.eu.greenhouse.io/gatewayfm" },
-    ...(isMobile ? [{ title: "Deploy rollup", url: "https://presto.gateway.fm/onboarding" }] : []),
+    ...brand.header.links,
+    ...(isMobile && deployButton ? [deployButton] : []),
   ];
 
   const onOpenBurgerMenu = () => {
     setOpenBurgerMenu((prev) => !prev);
   };
 
-  const redirectToPrestoOnboarding = () => {
-    window.open("https://presto.gateway.fm/onboarding", "_blank");
+  const redirectToDeploy = () => {
+    if (deployButton) {
+      window.open(deployButton.url, "_blank");
+    }
   };
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -61,9 +61,9 @@ export const HeaderLinks = () => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.linksAndLogoContainer}>
-        <LogoGatewayfm
+        <Logo
           className={classes.logo}
-          onClick={() => window.open("https://gateway.fm/", "_blank")}
+          onClick={() => window.open(brand.header.homeUrl, "_blank")}
         />
         <div ref={burgerIconRef}>
           <BurgerMenuIcon
@@ -90,9 +90,14 @@ export const HeaderLinks = () => {
           ))}
         </div>
       </div>
-      <button className={classes.button} onClick={redirectToPrestoOnboarding}>
-        Deploy rollup <ArrowRight className={classes.icon} />
-      </button>
+      <div className={classes.rightButtons}>
+        <AddNetworkButton />
+        {deployButton && (
+          <button className={classes.button} onClick={redirectToDeploy}>
+            {deployButton.title}
+          </button>
+        )}
+      </div>
     </div>
   );
 };

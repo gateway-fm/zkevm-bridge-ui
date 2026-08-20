@@ -183,7 +183,7 @@ export const useBridgeCardRedesignStyles = createUseStyles((theme: Theme) => ({
     },
     backgroundColor: theme.palette.primary.mainRedesign,
     border: "none",
-    borderRadius: 32,
+    borderRadius: 16,
     color: theme.palette.white,
     cursor: "pointer",
     fontWeight: 700,

@@ -45,14 +45,16 @@ export const Router: FC = () => {
     [frontendType]
   );
 
-  const filteredRoutes =
-    !env || areSettingsVisible(env)
-      ? routes
-      : Object.values(routes).filter((route) => route.path !== routes.settings.path);
+  const filteredRoutes = Object.values(routes).filter((route) => {
+    if (route.id === "settings" && env && !areSettingsVisible(env)) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <Routes>
-      {Object.values(filteredRoutes).map(({ id, isPrivate, path }) => {
+      {filteredRoutes.map(({ id, isPrivate, path }) => {
         const Component = components[id];
         return (
           <Route

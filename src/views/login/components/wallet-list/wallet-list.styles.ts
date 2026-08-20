@@ -34,16 +34,22 @@ export const useWalletListRedesignStyles = createUseStyles((theme: Theme) => ({
     "&:disabled": {
       cursor: "inherit",
     },
+    "&:hover:not(:disabled)": {
+      background: theme.palette.grey.light,
+    },
     alignItems: "center",
     appearance: "none",
-    backgroundColor: theme.palette.primary.mainRedesign,
-    border: `1px solid ${theme.palette.primary.light}`,
+    backgroundColor: theme.palette.white,
+    border: "1px solid rgba(28, 28, 28, 0.1)",
     borderRadius: 8,
-    color: theme.palette.white,
+    color: "rgba(28, 28, 28, 0.5)",
     cursor: "pointer",
     display: "flex",
+    fontSize: 16,
+    fontWeight: 500,
+    height: 62,
     justifyContent: "space-between",
-    padding: [theme.spacing(1), theme.spacing(1)],
+    padding: [0, theme.spacing(2)],
     width: "100%",
     [theme.breakpoints.downM]: {
       fontSize: 14,
@@ -68,6 +74,16 @@ export const useWalletListRedesignStyles = createUseStyles((theme: Theme) => ({
     flexDirection: "column",
     gap: theme.spacing(1),
     padding: theme.spacing(2),
+  },
+  largeTitle: {
+    fontSize: 42,
+    fontWeight: 500,
+    lineHeight: "50px",
+    marginBottom: theme.spacing(1),
+    [theme.breakpoints.downM]: {
+      fontSize: 28,
+      lineHeight: "36px",
+    },
   },
     smallTitle: {
     color: "#78798d",
@@ -97,7 +113,7 @@ export const useWalletListRedesignStyles = createUseStyles((theme: Theme) => ({
   },
 
   walletName: {
-    color: theme.palette.white,
+    color: "rgba(28, 28, 28, 0.5)",
     marginLeft: theme.spacing(1),
     [theme.breakpoints.downM]: {
       fontSize: 12,

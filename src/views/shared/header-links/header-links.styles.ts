@@ -18,16 +18,16 @@ export const useHeaderLinksRedesignStyles = createUseStyles((theme: Theme) => ({
 
   button: {
     alignItems: "center",
-    alignSelf: "flex-end",
     backgroundColor: theme.palette.primary.mainRedesign,
     border: "none",
     borderRadius: 16,
     color: theme.palette.white,
     cursor: "pointer",
     display: "flex",
-    gap: theme.spacing(1),
-    height: 30,
-    padding: [theme.spacing(2), theme.spacing(2)],
+    fontSize: 16,
+    height: 38,
+    justifyContent: "center",
+    padding: [0, theme.spacing(2.5)],
     [theme.breakpoints.downM]: {
       display: "none",
     },
@@ -37,7 +37,8 @@ export const useHeaderLinksRedesignStyles = createUseStyles((theme: Theme) => ({
     width: 14,
   },
   linkItem: {
-    color: "#676e73 ",
+    color: theme.palette.black,
+    fontSize: 14,
     textDecoration: "none",
     transition: "color 0.3s",
     [theme.breakpoints.downM]: {
@@ -63,6 +64,9 @@ export const useHeaderLinksRedesignStyles = createUseStyles((theme: Theme) => ({
     alignItems: "center",
     display: "flex",
     gap: theme.spacing(3),
+    left: "50%",
+    position: "absolute",
+    transform: "translateX(-50%)",
 
     [theme.breakpoints.downM]: {
       alignItems: "center",
@@ -73,11 +77,13 @@ export const useHeaderLinksRedesignStyles = createUseStyles((theme: Theme) => ({
       fontSize: 22,
       gap: theme.spacing(2),
       justifyContent: "center",
+      left: "auto",
       padding: theme.spacing(3),
       position: "absolute",
       right: 24,
       textAlign: "center",
       top: 70,
+      transform: "none",
       width: "90vw",
       zIndex: 99,
     },
@@ -88,17 +94,26 @@ export const useHeaderLinksRedesignStyles = createUseStyles((theme: Theme) => ({
   openedBurgerMenuIcon: {
     transform: "rotate(90deg) ",
   },
+  rightButtons: {
+    alignItems: "center",
+    display: "flex",
+    gap: theme.spacing(1.5),
+  },
 
   wrapper: {
     alignItems: "center",
+    borderBottom: "1px solid rgba(28, 28, 28, 0.08)",
     display: "flex",
     justifyContent: "space-between",
-    marginInline: theme.spacing(5),
-    marginTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    paddingInline: theme.spacing(5),
+    paddingTop: theme.spacing(3),
+    position: "relative",
 
     [theme.breakpoints.downM]: {
-      marginInline: theme.spacing(3),
-      marginTop: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+      paddingInline: theme.spacing(3),
+      paddingTop: theme.spacing(1),
     },
   },
 }));

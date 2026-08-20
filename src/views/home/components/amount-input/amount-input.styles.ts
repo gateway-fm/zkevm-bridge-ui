@@ -44,12 +44,15 @@ export const useAmountInputStyles = createUseStyles((theme: Theme) => ({
 
 export const useAmountInputRedesignStyles = createUseStyles((theme: Theme) => ({
   amountInput: {
+    "&::placeholder": {
+      color: "rgba(28, 28, 28, 0.2)",
+    },
     "&:disabled": {
       backgroundColor: "transparent",
     },
     border: "none",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.05)",
     borderRadius: 8,
+    color: theme.palette.black,
     fontSize: "20px",
     height: "100%",
     lineHeight: "24px",
@@ -57,27 +60,27 @@ export const useAmountInputRedesignStyles = createUseStyles((theme: Theme) => ({
     textAlign: "right",
     width: "60%",
     [theme.breakpoints.upSm]: {
-      fontSize: (value: number) => (value < 16 ? "35px" : "25px"),
-      lineHeight: "40px",
+      fontSize: (value: number) => (value < 16 ? "48px" : "30px"),
+      lineHeight: "48px",
     },
   },
   maxButton: {
     "&:disabled": {
-      backgroundColor: theme.palette.grey.main,
+      opacity: 0.5,
     },
     "&:not(:disabled)": {
       cursor: "pointer",
     },
-    background: theme.palette.primary.mainRedesign,
-
-    border: "1px solid rgba(0, 0, 0, 0.05)",
+    background: "rgba(29, 74, 225, 0.1)",
+    border: "none",
     borderRadius: 8,
-    color: theme.palette.black,
-    height: "100%",
-    padding: theme.spacing(1),
+    color: theme.palette.primary.main,
+    height: 41,
+    padding: "0 20px",
   },
   maxText: {
-    color: theme.palette.white,
+    color: theme.palette.primary.main,
+    fontWeight: 500,
   },
   wrapper: {
     alignItems: "center",

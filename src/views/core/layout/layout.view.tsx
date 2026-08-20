@@ -2,7 +2,8 @@ import { FC, PropsWithChildren, useEffect, useState } from "react";
 const bg = "/gradient-background.png";
 
 import { reportError } from "src/adapters/error";
-import LogoGatewayfm from "src/assets/icons/logo-gatewayfm.svg?react";
+import GatewayLogo from "src/assets/icons/logo-gatewayfm.svg?react";
+import { brand } from "src/brands";
 import { useEnvContext } from "src/contexts/env.context";
 import { useUIContext } from "src/contexts/ui.context";
 import { theme } from "src/styles/theme";
@@ -35,17 +36,23 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
       <div
         className={classes.layout}
         style={
-          showNewDesign && env?.showBackgroundImage
-            ? { backgroundImage: `url(${bg})` }
-            : { backgroundColor: theme.palette.grey.light }
+          showNewDesign && brand.background
+            ? { background: brand.background }
+            : showNewDesign && env?.showBackgroundImage
+              ? { backgroundImage: `url(${bg})` }
+              : { backgroundColor: theme.palette.grey.light }
         }
       >
         {showBrandComponents && <HeaderLinks />}
-        <div className={classes.container}>{children}</div>
+        <div
+          className={`${classes.container} ${showBrandComponents ? classes.containerCompact : ""}`}
+        >
+          {children}
+        </div>
         {showBrandComponents && (
           <div className={classes.poweredLogoBox}>
             Powered by{" "}
-            <LogoGatewayfm onClick={() => window.open("https://gateway.fm/", "_blank")} />
+            <GatewayLogo onClick={() => window.open("https://gateway.fm/", "_blank")} />
           </div>
         )}
       </div>

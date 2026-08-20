@@ -146,14 +146,15 @@ export const useBridgeFormRedesignStyles = createUseStyles((theme: Theme) => ({
   fromChain: {
     alignItems: "center",
     background: "none",
-    border: "1px solid rgba(0, 0, 0, 0.07)",
+    border: "1px solid rgba(29, 74, 225, 0.2)",
     borderRadius: 8,
     cursor: "pointer",
     display: "flex",
     gap: theme.spacing(0.75),
+    height: 42,
     marginBottom: -theme.spacing(0.75),
     marginTop: theme.spacing(0.5),
-    padding: [theme.spacing(0.75), theme.spacing(1.25)],
+    padding: [0, theme.spacing(1.25)],
     [theme.breakpoints.downM]: {
       gap: theme.spacing(1.25),
       maxWidth: "100%",
@@ -177,6 +178,7 @@ export const useBridgeFormRedesignStyles = createUseStyles((theme: Theme) => ({
     },
   },
   middleRow: {
+    alignItems: "center",
     marginTop: theme.spacing(1.25),
   },
   rightBox: {
@@ -210,13 +212,14 @@ export const useBridgeFormRedesignStyles = createUseStyles((theme: Theme) => ({
   toChain: {
     alignItems: "center",
     background: "none",
-    border: "1px solid rgba(0, 0, 0, 0.07)",
+    border: "1px solid rgba(29, 74, 225, 0.2)",
     borderRadius: 8,
     display: "flex",
     gap: theme.spacing(0.75),
+    height: 42,
     marginBottom: -theme.spacing(0.75),
     marginTop: theme.spacing(0.5),
-    padding: [theme.spacing(0.75), theme.spacing(1.25)],
+    padding: [0, theme.spacing(1.25)],
     [theme.breakpoints.upSm]: {
       gap: theme.spacing(1.25),
     },
@@ -228,24 +231,27 @@ export const useBridgeFormRedesignStyles = createUseStyles((theme: Theme) => ({
 
   tokenSelector: {
     alignItems: "center",
-    border: "1px solid rgba(0, 0, 0, 0.07)",
+    border: "1px solid rgba(29, 74, 225, 0.2)",
     borderRadius: 8,
     cursor: "pointer",
     display: "flex",
     gap: theme.spacing(1),
+    height: 42,
     maxWidth: "50%",
     overflow: "hidden",
-    padding: [theme.spacing(1), theme.spacing(1.25)],
+    padding: [0, theme.spacing(1.25)],
     textOverflow: "ellipsis",
     transition: theme.hoverTransition,
     [theme.breakpoints.upSm]: {
       backgroundColor: theme.palette.white,
       gap: theme.spacing(2),
-      padding: [theme.spacing(1.5), theme.spacing(2)],
+      padding: [0, theme.spacing(2)],
       whiteSpace: "nowrap",
     },
   },
   tokenSelectorSymbol: {
+    fontSize: 16,
+    fontWeight: 400,
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",

@@ -97,8 +97,8 @@ export const useActivityRedesignStyles = createUseStyles((theme: Theme) => ({
 
   contentWrapperBody: {
     backgroundColor: theme.palette.white,
-    borderRadius: 14,
-    borderTopLeftRadius: 0,
+    borderRadius: 24,
+    boxShadow: "0px 4px 8px 4px rgba(0, 0, 0, 0.1)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
@@ -111,13 +111,10 @@ export const useActivityRedesignStyles = createUseStyles((theme: Theme) => ({
     },
   },
 
-  displayAllSelectedSelected: {
-    borderTopLeftRadius: 0,
-  },
+  displayAllSelectedSelected: {},
 
   emptyMessage: {
     alignSelf: "center",
-    borderTopLeftRadius: 0,
     padding: [100, theme.spacing(2)],
     textAlign: "center",
     [theme.breakpoints.upSm]: {
@@ -126,19 +123,25 @@ export const useActivityRedesignStyles = createUseStyles((theme: Theme) => ({
   },
 
   filterBox: {
-    "&:not(:first-of-type)": {},
+    "& p": {
+      color: "inherit",
+    },
     alignItems: "center",
-    backgroundColor: theme.palette.grey.main,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    backgroundColor: theme.palette.white,
+    border: "1px solid rgba(28, 28, 28, 0.1)",
+    borderRadius: 16,
+    color: theme.palette.black,
     cursor: "pointer",
     display: "flex",
-    padding: [[theme.spacing(1), theme.spacing(1)]],
+    height: 38,
+    padding: [0, theme.spacing(1.5)],
     transition: theme.hoverTransition,
   },
 
   filterBoxes: {
     display: "flex",
+    gap: theme.spacing(1.5),
+    marginBottom: theme.spacing(2),
     marginTop: theme.spacing(5),
     maxWidth: theme.maxWidth,
     width: "100%",
@@ -149,15 +152,15 @@ export const useActivityRedesignStyles = createUseStyles((theme: Theme) => ({
   },
 
   filterBoxSelected: {
-    backgroundColor: theme.palette.white,
-    color: theme.palette.grey.dark,
+    backgroundColor: "rgba(29, 74, 225, 0.1)",
+    border: "1px solid rgba(29, 74, 225, 0.2)",
+    color: theme.palette.primary.main,
   },
 
   filterNumberBox: {
     alignItems: "center",
-    backgroundColor: theme.palette.grey.light,
-    border: `${theme.palette.primary.light} 2px solid`,
-    borderRadius: 6,
+    backgroundColor: "rgba(28, 28, 28, 0.06)",
+    borderRadius: 8,
     display: "flex",
     padding: [theme.spacing(0.25), theme.spacing(1)],
   },
@@ -193,7 +196,7 @@ export const useActivityRedesignStyles = createUseStyles((theme: Theme) => ({
   },
 
   stickyContentBorder: {
-    borderBottom: `${theme.palette.grey.main} 1px solid`,
+    borderBottom: "1px solid rgba(28, 28, 28, 0.08)",
   },
 
   wrapper: {

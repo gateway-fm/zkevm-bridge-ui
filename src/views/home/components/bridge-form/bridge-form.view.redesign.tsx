@@ -18,6 +18,7 @@ import { Button } from "src/views/shared/button/button.view";
 import { CardRedesign } from "src/views/shared/card/card.view.redesign";
 import { ChainListRedesign } from "src/views/shared/chain-list/chain-list.view.redesign";
 import { ErrorMessage } from "src/views/shared/error-message/error-message.view";
+import { Icon } from "src/views/shared/icon/icon.view";
 import { Spinner } from "src/views/shared/spinner/spinner.view";
 import { TokenBalanceRedesign } from "src/views/shared/token-balance/token-balances.view.redesign";
 import { Typography } from "src/views/shared/typography/typography.view";
@@ -285,9 +286,8 @@ export const BridgeFormRedesign: FC<BridgeFormProps> = ({
         </div>
         <div className={`${classes.row} ${classes.middleRow}`}>
           <button className={classes.tokenSelector} onClick={onTokenDropdownClick} type="button">
-            <Typography className={classes.tokenSelectorSymbol} type="h2">
-              {symbol}
-            </Typography>
+            <Icon isRounded size={24} url={token.logoURI} />
+            <span className={classes.tokenSelectorSymbol}>{symbol}</span>
             <CaretDown />
           </button>
           <AmountInputRedesign

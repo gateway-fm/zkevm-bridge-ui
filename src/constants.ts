@@ -20,6 +20,7 @@ import { defaultAbiCoder } from "ethers/lib/utils";
 import { L2Icon } from "./assets/network-icon";
 import EthChainIcon from "src/assets/icons/chains/ethereum.svg?react";
 import PolygonZkEVMChainIcon from "src/assets/icons/chains/polygon-zkevm.svg?react";
+import { brand } from "src/brands";
 import { Chain, Currency, EthereumChain, ProviderError, Token, ZkEVMChain } from "src/domain";
 import { Bridge__factory } from "src/types/contracts/bridge";
 import { ProofOfEfficiency__factory } from "src/types/contracts/proof-of-efficiency";
@@ -127,6 +128,8 @@ export const getChains = ({
   if (import.meta.env.VITE_CHAIN_ICON_PATH) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     polygonZkEVM.iconUrl = import.meta.env.VITE_CHAIN_ICON_PATH;
+  } else if (brand.chainIconUrl) {
+    polygonZkEVM.iconUrl = brand.chainIconUrl;
   }
 
   return Promise.all([
@@ -204,12 +207,19 @@ const decodeGasTokenMetadata = (
 
   return { decimals: Number(encoded[2]), name: String(encoded[0]), symbol: String(encoded[1]) };
 };
+// The brand mark applies only to a custom gas token (e.g. TTT); plain ETH
+// keeps the Ethereum logo.
+const getNativeTokenLogoUri = (chain: Chain): string =>
+  chain.nativeCurrency.symbol === "ETH"
+    ? ETH_TOKEN_LOGO_URI
+    : brand.nativeTokenLogoUri ?? ETH_TOKEN_LOGO_URI;
+
 export const getEtherToken = (chain: Chain): Token => {
   return {
     address: ethers.constants.AddressZero,
     chainId: chain.chainId,
     decimals: chain.nativeCurrency.decimals,
-    logoURI: ETH_TOKEN_LOGO_URI,
+    logoURI: getNativeTokenLogoUri(chain),
     name: chain.nativeCurrency.name,
     symbol: chain.nativeCurrency.symbol,
     wrappedToken: chain.nativeCurrency.wrapped,
@@ -224,7 +234,7 @@ export const getGasToken = (chain: Chain): Token => {
     address: chain.nativeCurrency.wrapped.address,
     chainId: chain.nativeCurrency.wrapped.chainId,
     decimals: chain.nativeCurrency.decimals,
-    logoURI: ETH_TOKEN_LOGO_URI,
+    logoURI: getNativeTokenLogoUri(chain),
     name: chain.nativeCurrency.name,
     symbol: chain.nativeCurrency.symbol,
     wrappedToken: { address: ethers.constants.AddressZero, chainId: chain.chainId },

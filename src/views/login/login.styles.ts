@@ -131,6 +131,7 @@ export const useLoginRedesignStyles = createUseStyles((theme: Theme) => ({
     flexDirection: "column",
     justifyContent: "center",
     marginBottom: theme.spacing(5),
+    marginTop: theme.spacing(5),
   },
 
 }));

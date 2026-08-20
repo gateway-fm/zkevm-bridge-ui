@@ -89,6 +89,14 @@ export const useHeaderRedesignStyles = createUseStyles((theme: Theme) => ({
       margin: [theme.spacing(3), "auto", 0],
     },
   },
+  // Page title, matching the network heading as rendered on the bridge screen.
+  headerTitle: {
+    fontSize: 48,
+    fontWeight: 500,
+    [theme.breakpoints.downM]: {
+      fontSize: 28,
+    },
+  },
   icon: {
     height: theme.spacing(2),
     width: theme.spacing(2),

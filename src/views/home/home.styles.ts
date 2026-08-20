@@ -59,4 +59,11 @@ export const useHomeRedesignStyles = createUseStyles((theme: Theme) => ({
     maxWidth: theme.maxWidth,
     width: "100%",
   },
+  statusDot: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: "50%",
+    height: 8,
+    marginRight: theme.spacing(1),
+    width: 8,
+  },
 }));
