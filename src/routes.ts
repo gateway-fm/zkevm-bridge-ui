@@ -2,6 +2,7 @@ export type RouteId =
   | "activity"
   | "bridgeConfirmation"
   | "bridgeDetails"
+  | "faucet"
   | "home"
   | "login"
   | "networkError"
@@ -30,6 +31,11 @@ export const routes: {
     id: "bridgeDetails",
     isPrivate: true,
     path: "/bridge-details/:bridgeId",
+  },
+  faucet: {
+    id: "faucet",
+    isPrivate: false,
+    path: "/faucet",
   },
   home: {
     id: "home",

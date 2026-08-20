@@ -1,3 +1,5 @@
+import { brand } from "src/brands";
+
 export const getEnv = (key: keyof ImportMetaEnv, defaultValue: string): string  => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const value = import.meta.env[key];
@@ -10,6 +12,7 @@ export type Theme = {
     downM: string;
     upSm: string;
   };
+  fontFamily: string;
   hoverTransition: string;
   maxWidth: number;
   palette: {
@@ -44,42 +47,48 @@ export type Theme = {
   spacing: (value: number) => number;
 };
 
+// Palette defaults come from the active brand (src/brands). Individual
+// `VITE_THEME_COLOR_*` env vars still override them, preserving prior behaviour.
 export const theme: Theme = {
   breakpoints: {
     downLg: "@media (max-width: 1024px)",
     downM: "@media (max-width: 788px)",
     upSm: "@media (min-width: 480px)",
   },
+  fontFamily: brand.fontFamily,
   hoverTransition: "all 150ms",
   maxWidth: 644,
   palette: {
-    black: getEnv("VITE_THEME_COLOR_BLACK", "#0a0b0d"),
+    black: getEnv("VITE_THEME_COLOR_BLACK", brand.palette.black),
     error: {
-      light: getEnv("VITE_THEME_COLOR_ERROR_LIGHT", "rgba(232,67,12,0.1)"),
-      main: getEnv("VITE_THEME_COLOR_ERROR_MAIN", "#e8430d"),
+      light: getEnv("VITE_THEME_COLOR_ERROR_LIGHT", brand.palette.error.light),
+      main: getEnv("VITE_THEME_COLOR_ERROR_MAIN", brand.palette.error.main),
     },
     grey: {
-      dark: getEnv("VITE_THEME_COLOR_GREY_DARK", "#78798d"),
-      light: getEnv("VITE_THEME_COLOR_GREY_LIGHT", "#f0f1f6"),
-      main: getEnv("VITE_THEME_COLOR_GREY_MAIN", "#e2e5ee"),
-      veryDark: getEnv("VITE_THEME_COLOR_GREY_VERY_DARK", "#363740"),
+      dark: getEnv("VITE_THEME_COLOR_GREY_DARK", brand.palette.grey.dark),
+      light: getEnv("VITE_THEME_COLOR_GREY_LIGHT", brand.palette.grey.light),
+      main: getEnv("VITE_THEME_COLOR_GREY_MAIN", brand.palette.grey.main),
+      veryDark: getEnv("VITE_THEME_COLOR_GREY_VERY_DARK", brand.palette.grey.veryDark),
     },
     primary: {
-      dark: getEnv("VITE_THEME_COLOR_PRIMARY_DARK", "#5a1cc3"),
-      light: getEnv("VITE_THEME_COLOR_PRIMARY_LIGHT", "#EEE8FF"),
-      main: getEnv("VITE_THEME_COLOR_PRIMARY_MAIN", "#7b3fe4"),
-      mainRedesign: getEnv("VITE_THEME_COLOR_PRIMARY_MAIN_REDESIGN", "#8950FA"),
+      dark: getEnv("VITE_THEME_COLOR_PRIMARY_DARK", brand.palette.primary.dark),
+      light: getEnv("VITE_THEME_COLOR_PRIMARY_LIGHT", brand.palette.primary.light),
+      main: getEnv("VITE_THEME_COLOR_PRIMARY_MAIN", brand.palette.primary.main),
+      mainRedesign: getEnv(
+        "VITE_THEME_COLOR_PRIMARY_MAIN_REDESIGN",
+        brand.palette.primary.mainRedesign
+      ),
     },
     success: {
-      light: getEnv("VITE_THEME_COLOR_SUCCESS_LIGHT", "rgba(0,255,0,0.1)"),
-      main: getEnv("VITE_THEME_COLOR_SUCCESS_MAIN", "#54DC04"),
+      light: getEnv("VITE_THEME_COLOR_SUCCESS_LIGHT", brand.palette.success.light),
+      main: getEnv("VITE_THEME_COLOR_SUCCESS_MAIN", brand.palette.success.main),
     },
-    transparency: getEnv("VITE_THEME_COLOR_TRANSPARENCY", "rgba(8,17,50,0.5)"),
+    transparency: getEnv("VITE_THEME_COLOR_TRANSPARENCY", brand.palette.transparency),
     warning: {
-      light: getEnv("VITE_THEME_COLOR_WARNING_LIGHT", "rgba(225,126,38,0.1)"),
-      main: getEnv("VITE_THEME_COLOR_WARNING_MAIN", "#e17e26"),
+      light: getEnv("VITE_THEME_COLOR_WARNING_LIGHT", brand.palette.warning.light),
+      main: getEnv("VITE_THEME_COLOR_WARNING_MAIN", brand.palette.warning.main),
     },
-    white: getEnv("VITE_THEME_COLOR_WHITE", "#ffffff"),
+    white: getEnv("VITE_THEME_COLOR_WHITE", brand.palette.white),
   },
   spacing: (value: number): number => value * 8,
 };

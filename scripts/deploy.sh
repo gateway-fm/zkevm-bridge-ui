@@ -94,6 +94,64 @@ then
   echo "VITE_SHOW_BACKGROUND_IMAGE=$SHOW_BACKGROUND_IMAGE" >> $ENV_FILENAME
 fi
 
+# BRANDING (white-label). VITE_BRAND selects the brand token/asset set at build
+# time (src/brands); the rest are per-deployment content. Unset => default brand.
+if [ ! -z "$BRAND" ];
+then
+  echo "VITE_BRAND=$BRAND" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$FRONTEND_TYPE" ];
+then
+  echo "VITE_FRONTEND_TYPE=$FRONTEND_TYPE" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$BRAND_COMPONENTS" ];
+then
+  echo "VITE_BRAND_COMPONENTS=$BRAND_COMPONENTS" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$NETWORK_NAME" ];
+then
+  echo "VITE_NETWORK_NAME=$NETWORK_NAME" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$NETWORK_SYMBOL" ];
+then
+  echo "VITE_NETWORK_SYMBOL=$NETWORK_SYMBOL" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$LOGO_PATH" ];
+then
+  echo "VITE_LOGO_PATH=$LOGO_PATH" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$ICON_PATH" ];
+then
+  echo "VITE_ICON_PATH=$ICON_PATH" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$FAVICON_PATH" ];
+then
+  echo "VITE_FAVICON_PATH=$FAVICON_PATH" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$CHAIN_ICON_URL" ];
+then
+  echo "VITE_CHAIN_ICON_URL=$CHAIN_ICON_URL" >> $ENV_FILENAME
+fi
+
+# FAUCET (only used by brands whose faucet is enabled, e.g. teiza)
+if [ ! -z "$FAUCET_API_URL" ];
+then
+  echo "VITE_FAUCET_API_URL=$FAUCET_API_URL" >> $ENV_FILENAME
+fi
+
+if [ ! -z "$FAUCET_SERVING_ADDRESS" ];
+then
+  echo "VITE_FAUCET_SERVING_ADDRESS=$FAUCET_SERVING_ADDRESS" >> $ENV_FILENAME
+fi
+
 echo "Generated .env file:"
 echo "$(cat /app/.env)"
 

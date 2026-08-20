@@ -1,6 +1,7 @@
 import { ComponentType, FC, useMemo } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import { brand } from "src/brands";
 import { useEnvContext } from "src/contexts/env.context";
 import { RouteId, routes } from "src/routes";
 import { areSettingsVisible } from "src/utils/feature-toggles";
@@ -10,6 +11,7 @@ import { BridgeConfirmation } from "src/views/bridge-confirmation/bridge-confirm
 import { BridgeConfirmationRedesign } from "src/views/bridge-confirmation/bridge-confirmation.view.redesign";
 import { BridgeDetails } from "src/views/bridge-details/bridge-details.view";
 import { BridgeDetailsRedesign } from "src/views/bridge-details/bridge-details.view.redisign";
+import { FaucetRedesign } from "src/views/faucet/faucet.view.redesign";
 import { Home } from "src/views/home/home.view";
 import { HomeRedesign } from "src/views/home/home.view.redesign";
 import { Login } from "src/views/login/login.view";
@@ -22,6 +24,7 @@ const redesignComponents : Record<RouteId, ComponentType> = {
   activity: ActivityRedesign,
   bridgeConfirmation: BridgeConfirmationRedesign,
   bridgeDetails: BridgeDetailsRedesign,
+  faucet: FaucetRedesign,
   home: HomeRedesign,
   login: LoginRedesign,
   networkError: NetworkError,
@@ -31,6 +34,7 @@ const baseComponents: Record<RouteId, ComponentType> = {
   activity: Activity,
   bridgeConfirmation: BridgeConfirmation,
   bridgeDetails: BridgeDetails,
+  faucet: FaucetRedesign,
   home: Home,
   login: Login,
   networkError: NetworkError,
@@ -45,14 +49,19 @@ export const Router: FC = () => {
     [frontendType]
   );
 
-  const filteredRoutes =
-    !env || areSettingsVisible(env)
-      ? routes
-      : Object.values(routes).filter((route) => route.path !== routes.settings.path);
+  const filteredRoutes = Object.values(routes).filter((route) => {
+    if (route.id === "settings" && env && !areSettingsVisible(env)) {
+      return false;
+    }
+    if (route.id === "faucet" && !brand.faucet.enabled) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <Routes>
-      {Object.values(filteredRoutes).map(({ id, isPrivate, path }) => {
+      {filteredRoutes.map(({ id, isPrivate, path }) => {
         const Component = components[id];
         return (
           <Route

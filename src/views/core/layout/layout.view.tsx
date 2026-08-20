@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useEffect, useState } from "react";
 const bg = "/gradient-background.png";
 
 import { reportError } from "src/adapters/error";
-import LogoGatewayfm from "src/assets/icons/logo-gatewayfm.svg?react";
+import { brand } from "src/brands";
 import { useEnvContext } from "src/contexts/env.context";
 import { useUIContext } from "src/contexts/ui.context";
 import { theme } from "src/styles/theme";
@@ -45,7 +45,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
         {showBrandComponents && (
           <div className={classes.poweredLogoBox}>
             Powered by{" "}
-            <LogoGatewayfm onClick={() => window.open("https://gateway.fm/", "_blank")} />
+            <brand.assets.Logo onClick={() => window.open(brand.header.poweredByUrl, "_blank")} />
           </div>
         )}
       </div>

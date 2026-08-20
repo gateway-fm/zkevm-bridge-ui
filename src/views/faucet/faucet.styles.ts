@@ -1,0 +1,162 @@
+import { createUseStyles } from "react-jss";
+
+import { Theme } from "src/styles/theme";
+
+export const useFaucetStyles = createUseStyles((theme: Theme) => ({
+  addressInput: {
+    "&::placeholder": {
+      color: theme.palette.grey.dark,
+    },
+    "&:focus": {
+      borderColor: theme.palette.primary.main,
+      outline: "none",
+    },
+    backgroundColor: theme.palette.white,
+    border: `1px solid ${theme.palette.grey.main}`,
+    borderRadius: 12,
+    color: theme.palette.black,
+    fontFamily: theme.fontFamily,
+    fontSize: 16,
+    padding: [theme.spacing(2), theme.spacing(2.5)],
+    width: "100%",
+  },
+  badge: {
+    alignItems: "center",
+    backgroundColor: theme.palette.primary.light,
+    borderRadius: 40,
+    color: theme.palette.primary.main,
+    display: "inline-flex",
+    fontSize: 15,
+    fontWeight: 600,
+    gap: theme.spacing(1),
+    marginBottom: theme.spacing(3),
+    padding: [theme.spacing(1), theme.spacing(2.5)],
+  },
+  badgeDot: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: "50%",
+    height: 8,
+    width: 8,
+  },
+  buttonWrap: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: theme.spacing(4),
+  },
+  card: {
+    background: theme.palette.white,
+    borderRadius: 24,
+    boxShadow: "0px 4px 8px 4px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    flexDirection: "column",
+    gap: theme.spacing(3),
+    padding: theme.spacing(4),
+    textAlign: "left",
+    width: "100%",
+  },
+  contentWrapper: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    margin: "auto",
+    maxWidth: 900,
+    textAlign: "center",
+    width: "100%",
+  },
+  copyButton: {
+    alignItems: "center",
+    background: "transparent",
+    border: "none",
+    cursor: "pointer",
+    display: "flex",
+    padding: theme.spacing(0.5),
+  },
+  copyIcon: {
+    height: 18,
+    width: 18,
+  },
+  faucet: {
+    display: "flex",
+    flexDirection: "column",
+    padding: [theme.spacing(2), theme.spacing(2), theme.spacing(6)],
+    width: "100%",
+  },
+  fieldLabel: {
+    color: theme.palette.black,
+    fontSize: 16,
+    fontWeight: 500,
+    whiteSpace: "nowrap",
+  },
+  heading: {
+    fontSize: 84,
+    fontWeight: 700,
+    lineHeight: 1.05,
+    margin: [theme.spacing(2), 0, theme.spacing(5)],
+    [theme.breakpoints.downLg]: {
+      fontSize: 64,
+    },
+    [theme.breakpoints.downM]: {
+      fontSize: 40,
+    },
+  },
+  headingAccent: {
+    color: theme.palette.primary.main,
+  },
+  helperLink: {
+    color: theme.palette.primary.main,
+    textDecoration: "underline",
+  },
+  helperText: {
+    color: theme.palette.black,
+    fontSize: 15,
+    lineHeight: 1.6,
+    marginTop: theme.spacing(3),
+    textAlign: "center",
+  },
+  mark: {
+    height: 56,
+    marginBottom: theme.spacing(3),
+    width: 56,
+  },
+  requestError: {
+    color: theme.palette.error.main,
+    fontSize: 14,
+    marginTop: theme.spacing(2),
+    textAlign: "center",
+  },
+  requestSuccess: {
+    color: theme.palette.success.main,
+    fontSize: 14,
+    marginTop: theme.spacing(2),
+    textAlign: "center",
+  },
+  servingAddress: {
+    color: theme.palette.black,
+    fontSize: 15,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+  servingRow: {
+    alignItems: "center",
+    display: "flex",
+    gap: theme.spacing(2),
+    [theme.breakpoints.downM]: {
+      alignItems: "flex-start",
+      flexDirection: "column",
+      gap: theme.spacing(1),
+    },
+  },
+  servingValue: {
+    alignItems: "center",
+    backgroundColor: theme.palette.primary.light,
+    borderRadius: 12,
+    display: "flex",
+    flex: 1,
+    gap: theme.spacing(1),
+    justifyContent: "space-between",
+    minWidth: 0,
+    padding: [theme.spacing(1.5), theme.spacing(2)],
+    width: "100%",
+  },
+}));

@@ -1,0 +1,6 @@
+<!-- TEIZA header/footer lockup: blue lightning bolt + dark wordmark.
+     Recreated from the client deck; replace with the official Figma export for exact letterforms. -->
+<svg width="132" height="36" viewBox="0 0 132 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22.5 4 L9 20.5 H16.8 L14 32 L28 14.5 H20.2 L22.5 4 Z" fill="#2C48F6"/>
+  <text x="40" y="25" font-family="Poppins, 'Modern Era', system-ui, sans-serif" font-size="22" font-weight="700" letter-spacing="5" fill="#0A0B0D">TEIZA</text>
+</svg>

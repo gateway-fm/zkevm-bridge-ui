@@ -1,0 +1,6 @@
+<!-- TEIZA app-icon mark: white bolt on a rounded blue square.
+     Recreated from the client deck; replace with the official Figma export. -->
+<svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="44" height="44" rx="11" fill="#2C48F6"/>
+  <path d="M25 9 L14 24 H21 L19 35 L31 19 H23.4 L25 9 Z" fill="#fff"/>
+</svg>
