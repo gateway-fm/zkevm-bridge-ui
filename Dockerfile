@@ -1,6 +1,7 @@
 # Stage 1: Node.js for building (using official secure image)
 # PRST-4200: pin Node.js to 22.23.2 (fixes 3 high / 4 medium nodejs CVEs flagged by Aikido)
-FROM node:22.23.2-alpine AS node-base
+# Bumped to 22.23.4 for the AIKIDO-2026-303617 / AIKIDO-2026-433610 nodejs advisories.
+FROM node:22.23.4-alpine AS node-base
 
 # PRST-4185: npm bundles a vulnerable ip-address (<10.3.1, GHSA-mwp4-54f8-5fhr, SSRF via
 # octal/decimal IPv4 parsing mismatch). No npm release ships the fix yet, so replace the
