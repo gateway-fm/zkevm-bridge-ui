@@ -76,8 +76,8 @@ export const GAS_PRICE_INCREASE_PERCENTAGE = 50; // 50%
 
 export const DEPOSIT_CHECK_WORD = "I understand";
 
-export const ETH_TOKEN_LOGO_URI =
-  "https://raw.githubusercontent.com/Uniswap/interface/main/packages/ui/src/assets/logos/png/ethereum-logo.png";
+// Bundled in public/ rather than hotlinked: the upstream Uniswap URL started returning 404.
+export const ETH_TOKEN_LOGO_URI = "/icons/tokens/eth.png";
 
 export const POLYGON_SUPPORT_URL = "https://support.polygon.technology";
 
