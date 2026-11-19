@@ -13,7 +13,7 @@ RUN cd /tmp && npm pack ip-address@10.3.1 && \
     rm ip-address-10.3.1.tgz
 
 # Stage 2: Final image with nginx and node
-FROM nginx:alpine
+FROM nginx:1.30.7-alpine
 
 # Copy Node.js from official image (ensures latest security patches)
 COPY --from=node-base /usr/local/bin/node /usr/local/bin/node
